@@ -46,7 +46,6 @@ describe('User', () => {
                     email: 'test@gmail.com',
                     password: 'test12345'
                 })
-        
                 if(response.body.success === false && response.body.message === 'Email already exists'){
                     expect(response.statusCode).toBe(400)
                 }

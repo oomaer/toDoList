@@ -1,7 +1,10 @@
 
 
 const User = require('../models/UserModel');
+const jwt = require('jsonwebtoken');
 const {checkValidEmail, checkValidPassword, checkValidName} = require('../utils/validityCheckers');
+require('dotenv').config();
+
 
 /*
     @desc Register a user
@@ -24,14 +27,17 @@ const registerUser = async (req, res) => {
         if(!checkValidName(name)){
             res.status(400).json({success: false, message: 'Invalid name'});
             return;
-        }
+        } 
+
         const user = new User({ name, email, password });
         const newUser = await user.save();
-        res.status(201).json({success: true, message: 'User created successfully', user: {
-            name: newUser.name,
+
+        const token = jwt.sign({
+            id: newUser._id,
             email: newUser.email,
-            _id: newUser._id
-        }});
+        }, process.env.JWT_KEY);
+
+        res.status(201).json({success: true, message: 'User created successfully', jwt: token, user: {name: newUser.name, email: newUser.email, id: newUser._id}});
         
     } catch (error) {
         if(error.code === 11000){
