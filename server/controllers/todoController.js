@@ -12,7 +12,10 @@ const {checkValidTodo} = require('../utils/validityCheckers');
 const createTodo = async (req, res) => {
     try {
         const {description} = req.body;
-        console.log(description)
+        if(!checkValidTodo(description)){
+            res.status(400).json({success: false, message: 'Invalid todo'});
+            return;
+        }
     }
     catch(error){
         res.status(500).json({success: false, message: 'Internal server error'});
