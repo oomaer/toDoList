@@ -57,5 +57,39 @@ describe('User', () => {
 
     })
 
+    describe('POST /users/login', () => {
+
+        describe('when user does not exist / invalid email', () => {
+            it('should return 400', async () => {
+                const response = await supertest(app).post('/users/login').send({
+                    email: 'test',
+                    password: 'test1234'
+                })
+                expect(response.statusCode).toBe(400)
+            })
+        })
+
+        describe('when invalid password entered', () => {
+            it('should return 400', async () => {
+                const response = await supertest(app).post('/users/login').send({
+                    email: 'test@gmail.com',
+                    password: 'test123'
+                })
+                expect(response.statusCode).toBe(400)
+            })
+        })
+
+        describe('when email and password are correct', () => {
+            it('should return 200', async () => {
+                const response = await supertest(app).post('/users/login').send({
+                    email: 'test@gmail.com',
+                    password: 'test12345'
+                })
+                expect(response.statusCode).toBe(200)
+            })
+        })
+
+    })
+
 
 })
