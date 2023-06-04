@@ -30,9 +30,11 @@ const main = async () => {
     
         const PORT = process.env.PORT || 5000;
     
-        app.listen(PORT, () => {
-            console.log('Example app listening on port '+PORT+'!')
-        })
+        if(process.env.Node_ENV!=='test'){
+            app.listen(PORT, () => {
+                console.log('Example app listening on port '+PORT+'!')
+            })
+        }
 
     }
     catch(err){
