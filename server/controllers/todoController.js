@@ -53,6 +53,31 @@ const getTodos = async (req, res) => {
 }
 
 /*
+    @desc Get todos of a specific date
+    @route GET /todo/getbydate/:userId/:date
+    @access Private
+    @required userId in params, date in params, authorization in header
+*/
+const getTodosByDate = async (req, res) => {
+    try{
+        const userId = req.params.userId;
+        const date = req.params.date;
+        const todos = await Todo.find({user: userId, createdAt: {
+            $gte: new Date(date),
+            $lt: new Date(date).setDate(new Date(date).getDate() + 1)
+        }});
+        res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
+    }
+    catch(error){
+        if(error.name === 'CastError'){
+            res.status(400).json({success: false, message: 'Invalid data provided by user'});
+            return;
+        }
+        res.status(500).json({success: false, message: 'Internal server error'});
+    }
+}
+
+/*
     @desc Change todo complete status
     @route PUT /todo/changeComplete/:todoId
     @access Private
@@ -81,7 +106,6 @@ const changeTodoComplete = async (req, res) => {
     }
 }
 
-
 /*
     @desc Delete a todo
     @route PUT /todo/delete/:todoId
@@ -108,9 +132,11 @@ const deleteTodoById = async (req, res) => {
 }
 
 
+
 module.exports = {
     createTodo,
     getTodos,
+    getTodosByDate,
     changeTodoComplete,
     deleteTodoById
 }

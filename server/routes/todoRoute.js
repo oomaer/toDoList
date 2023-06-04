@@ -16,6 +16,10 @@ router.get('/get/:userId', isAuthorized, (req, res) => {
     todoController.getTodos(req, res);
 })
 
+router.get('/getbydate/:userId/:date', isAuthorized, (req, res) => {
+    todoController.getTodosByDate(req, res);
+})
+
 router.put('/changecompletestatus/:todoId', isAuthorized, (req, res) => {
     todoController.changeTodoComplete(req, res);
 })
