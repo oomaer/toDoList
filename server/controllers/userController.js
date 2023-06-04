@@ -102,12 +102,11 @@ const authenticateUser = async (req, res) => {
         res.status(200).json({success: true, message: 'User authenticated successfully', user: {name: user.name, email: user.email, id: user._id}});
     }
     catch(error){
-    
         if(error.message === `Cannot read properties of undefined (reading 'split')` || 
             error.message === `jwt malformed` ||
-            error.message === `jwt must be provided`
+            error.message === `invalid token`
         ){
-            res.status(401).json({success: false, message: 'No token found'});
+            res.status(401).json({success: false, message: 'Invalid Token'});
             return;
         }
 
