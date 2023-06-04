@@ -56,4 +56,47 @@ describe('Todo', () => {
 
     })
 
+    describe('GET /todo/get', () => {
+ 
+        describe('when user authorization token missing', () => {
+            it('should return 401', async () => {
+                const userId = '647c3a549ab5aa5376a8abb8'
+                const response = await supertest(app).get(`/todo/get/${userId}`)
+                expect(response.statusCode).toBe(401)
+            })
+        })
+
+        describe("when user authotization token invalid", () => {
+            it('should return 401', async () => {
+                const userId = '647c3a549ab5aa5376a8abb8'
+                const response  = await supertest(app).get(`/todo/get/${userId}`).set('authorization', `test`)
+                expect(response.statusCode).toBe(401)
+            })
+        })
+
+        describe('when user id invalid', () => {
+            it('should return 400', async () => {
+                const validToken = jwt.sign({
+                    id: '647c3a549ab5aa5376a8abb8',
+                    email: 'test@gmail.com'
+                }, process.env.JWT_KEY)
+                const response = await supertest(app).get(`/todo/get/invalidId`).set('authorization', `Bearer ${validToken}`)
+                
+            })
+        })
+
+        describe('when user id is valid', () => {
+            it('should return 200', async () => {
+                const userId = '647c3a549ab5aa5376a8abb8'
+                const validToken = jwt.sign({
+                    id: userId,
+                    email: 'test@gmail.com'
+                }, process.env.JWT_KEY)
+                const response  = await supertest(app).get(`/todo/get/${userId}`).set('authorization', `Bearer ${validToken}`)
+                expect(response.statusCode).toBe(200)  
+            })
+        })
+
+    })
+
 })

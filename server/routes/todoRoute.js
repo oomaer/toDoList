@@ -12,4 +12,8 @@ router.post('/create', isAuthorized, (req, res) => {
     todoController.createTodo(req, res);
 })
 
+router.get('/get/:userId', isAuthorized, (req, res) => {
+    todoController.getTodos(req, res);
+})
+
 module.exports = router;

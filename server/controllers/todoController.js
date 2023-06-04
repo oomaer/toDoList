@@ -31,7 +31,23 @@ const createTodo = async (req, res) => {
     }
 }
 
+const getTodos = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const todos = await Todo.find({user: userId}).sort({createdAt: -1});
+        res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
+    }
+    catch(error){
+        if(error.name === 'CastError'){
+            res.status(400).json({success: false, message: 'Invalid user id'});
+            return;
+        }
+        res.status(500).json({success: false, message: 'Internal server error'});
+    }
+}
+
 
 module.exports = {
-    createTodo
+    createTodo,
+    getTodos
 }
