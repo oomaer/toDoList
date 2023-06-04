@@ -13,5 +13,16 @@ describe('User', () => {
 
     })
 
+    describe('POST /users/register', () => {
+        it('should return 201 OK', async () => {
+            const {body, statusCode} = await supertest(app).post('/users/register').send({
+                name: 'test',
+                email: 'test@gmail.com',
+                password: 'test'
+            })
+            
+        })   
+    })
+
 
 })
