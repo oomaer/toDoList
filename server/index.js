@@ -1,6 +1,15 @@
 const express = require('express');
+const cors = require('cors');
+
 const app = express();
-module.exports = { app }
+app.use(cors())
+
+
+//routes
+const userRoute = require('./routes/user');
+
+app.use('/users', userRoute)
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -13,3 +22,6 @@ app.listen(PORT, () => {
 })
 
 
+
+
+module.exports = { app }
