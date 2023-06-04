@@ -119,8 +119,15 @@ describe('User', () => {
                 expect(response.statusCode).toBe(200)
             })
         })
-        
+
     })
 
+})
+
+describe('Todo', () => {
+
+    describe('POST /todo', () => {
+        
+    })
 
 })
