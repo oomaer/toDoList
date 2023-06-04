@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes
 const userRoute = require('./routes/userRoute');
+const todoRoute = require('./routes/todoRoute');
 
 const main = async () => {
     const db = 'mongodb://0.0.0.0:27017/todolistdb';
@@ -21,6 +22,7 @@ const main = async () => {
             autoIndex: true, //make this also true
         });
         app.use('/users', userRoute)
+        app.use('/todo', todoRoute)
 
         app.get('/', (req, res) => {
             res.send('Hello World!')

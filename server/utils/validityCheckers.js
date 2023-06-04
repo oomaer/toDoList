@@ -18,9 +18,15 @@ const checkValidName = (name) => {
     return name.length >= 3;
 }
 
+//check if todo is valid (at least 1 character)
+const checkValidTodo = (todo) => {
+    return todo.length >= 1;
+}
+
 
 module.exports = {
     checkValidEmail,
     checkValidPassword,
-    checkValidName
+    checkValidName,
+    checkValidTodo
 }
