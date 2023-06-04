@@ -56,7 +56,7 @@ describe('Todo', () => {
 
     // })
 
-    describe('GET /todo/get', () => {
+    describe('GET /todo/get/:todoId', () => {
  
         describe('when user authorization token missing', () => {
             it('should return 401', async () => {
@@ -99,7 +99,7 @@ describe('Todo', () => {
 
     })
 
-    describe('PUT /todo/changecompletestatus', () => {
+    describe('PUT /todo/changecompletestatus/:todoId', () => {
 
         describe('when user authorization token missing', () => {
             it('should return 401', async () => {
@@ -130,7 +130,6 @@ describe('Todo', () => {
                 const response  = await supertest(app).put(`/todo/changecompletestatus/1234`).set('authorization', `Bearer ${validToken}`).send({
                     completed: true
                 })
-                console.log(response.body)
                 expect(response.statusCode).toBe(400)
             })
         })
@@ -189,6 +188,60 @@ describe('Todo', () => {
             })
         })
 
+    })
+
+    describe('PUT /todo/delete/:todoId', () => {
+
+        describe('when user authorization token missing', () => {
+            it('should return 401', async () => {
+                const todoId = '647c61cd7e51e3c24e3153f8'
+                const response = await supertest(app).put(`/todo/delete/${todoId}`)
+                expect(response.statusCode).toBe(401)
+            })
+        })
+
+        describe("when user authotization token invalid", () => {
+            it('should return 401', async () => {
+                const todoId = '647c61cd7e51e3c24e3153f8'
+                const response  = await supertest(app).put(`/todo/delete/${todoId}`).set('authorization', `test`)
+                expect(response.statusCode).toBe(401)
+            })
+        })
+
+        describe("when todo id is incorrect", () => {
+            it('should return 400', async () => {
+                const validToken = jwt.sign({
+                    id: '647c3a549ab5aa5376a8abb8',
+                    email: 'test@gmail.com'
+                }, process.env.JWT_KEY)
+                const response  = await supertest(app).put(`/todo/changecompletestatus/1234`).set('authorization', `Bearer ${validToken}`)
+                expect(response.statusCode).toBe(400)
+            })
+        })
+
+        describe("when todo id does not exist in db", () => {
+            it('should return 404', async () => {
+                const todoId = '647c61cd7e51e3c24e0000a0'
+                const validToken = jwt.sign({
+                    id: '647c3a549ab5aa5376a8abb8',
+                    email: 'test@gmail.com'
+                }, process.env.JWT_KEY)
+                const response  = await supertest(app).put(`/todo/delete/${todoId}`).set('authorization', `Bearer ${validToken}`)
+                expect(response.statusCode).toBe(404)
+            })
+        })
+
+        // describe("when todo id is correct and user is authorized", () => {
+        //     it('should return 404', async () => {
+        //         const todoId = '647c61d66652ceb84594e165'
+        //         const validToken = jwt.sign({
+        //             id: '647c3a549ab5aa5376a8abb8',
+        //             email: 'test@gmail.com'
+        //         }, process.env.JWT_KEY)
+        //         const response  = await supertest(app).put(`/todo/delete/${todoId}`).set('authorization', `Bearer ${validToken}`)
+        //         expect(response.statusCode).toBe(200)
+        //     })
+        // })
     })
 
 })

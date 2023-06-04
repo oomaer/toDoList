@@ -82,8 +82,35 @@ const changeTodoComplete = async (req, res) => {
 }
 
 
+/*
+    @desc Delete a todo
+    @route PUT /todo/delete/:todoId
+    @access Private
+    @required authorization in header
+*/
+const deleteTodoById = async (req, res) => {
+    try{
+        const todoId = req.params.todoId;
+        const deleted = await Todo.findByIdAndDelete(todoId);
+        if(!deleted){
+            res.status(404).json({success: false, message: 'Todo does not exist'});
+            return;
+        }
+        res.status(200).json({success: true, message: 'Todo deleted successfully'});
+    }
+    catch(error){
+        if(error.name === 'CastError'){
+            res.status(400).json({success: false, message: 'Invalid todo id'});
+            return;
+        }
+        res.status(500).json({success: false, message: 'Internal server error'});
+    }
+}
+
+
 module.exports = {
     createTodo,
     getTodos,
-    changeTodoComplete
+    changeTodoComplete,
+    deleteTodoById
 }

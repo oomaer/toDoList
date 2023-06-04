@@ -20,4 +20,8 @@ router.put('/changecompletestatus/:todoId', isAuthorized, (req, res) => {
     todoController.changeTodoComplete(req, res);
 })
 
+router.put('/delete/:todoId', isAuthorized, (req, res) => {
+    todoController.deleteTodoById(req, res);
+})
+
 module.exports = router;
