@@ -12,7 +12,7 @@ const saltRounds = 10;
     @desc Register a user
     @route POST /users/register
     @access Public
-    @args name, email, password are required in the request body
+    @required name, email, password are required in the request body
 */
 const registerUser = async (req, res) => {
     try {
@@ -53,7 +53,7 @@ const registerUser = async (req, res) => {
     @desc Login a existing user
     @route POST /users/login
     @access Public
-    @args email, password are required in the request body
+    @required email, password are required in the request body
 */
 const loginUser = async (req, res) => {
     try{
@@ -81,8 +81,43 @@ const loginUser = async (req, res) => {
     }
 }
 
+/*
+    @desc Authenticate a User token
+    @route POST /users/authenticate
+    @access Public
+    @required jwt is required in the request header
+*/
+const authenticateUser = async (req, res) => {
+    try{
+        const token = req.headers.authorization.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_KEY);
+        const user = await User.findOne({
+            _id: decoded.id,
+            email: decoded.email
+        })
+        if(!user){
+            res.status(400).json({success: false, message: 'User does not exist'});
+            return;
+        }
+        res.status(200).json({success: true, message: 'User authenticated successfully', user: {name: user.name, email: user.email, id: user._id}});
+    }
+    catch(error){
+    
+        if(error.message === `Cannot read properties of undefined (reading 'split')` || 
+            error.message === `jwt malformed` ||
+            error.message === `jwt must be provided`
+        ){
+            res.status(401).json({success: false, message: 'No token found'});
+            return;
+        }
+
+        res.status(500).json({success: false, message: 'Internal server error'});
+    }
+}
+
 
 module.exports = { 
     registerUser,
-    loginUser
+    loginUser,
+    authenticateUser
 }

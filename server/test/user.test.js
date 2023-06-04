@@ -1,6 +1,8 @@
 
 const supertest = require('supertest')
 const { app } = require('../index')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 describe('User', () => {
     
@@ -89,6 +91,34 @@ describe('User', () => {
             })
         })
 
+    })
+
+    describe('GET /users/authenticate', () => {
+        
+        describe('when jwt is not provided', () => {
+            it('should return 401', async () => {
+                const response = await supertest(app).get('/users/authenticate')
+                expect(response.statusCode).toBe(401)
+            })
+        })
+
+        describe('when jwt is invalid', () => {
+            it('should return 401', async () => {
+                const response = await supertest(app).get('/users/authenticate').set('authorization', 'Bearer test')
+                expect(response.statusCode).toBe(401)
+            })
+        })
+
+        describe('when jwt is valid', () => {
+            it('should return 200', async () => {
+                const validToken = jwt.sign({
+                    id: '647c3a549ab5aa5376a8abb8',
+                    email: 'test@gmail.com'
+                }, process.env.JWT_KEY)
+                const response = await supertest(app).get('/users/authenticate').set('authorization', `Bearer ${validToken}`)
+                expect(response.statusCode).toBe(200)
+            })
+        })
     })
 
 
