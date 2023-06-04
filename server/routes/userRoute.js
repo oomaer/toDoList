@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    console.log(req.body)
     userController.registerUser(req, res);
 })
 

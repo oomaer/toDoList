@@ -14,7 +14,6 @@ const userRoute = require('./routes/userRoute');
 const main = async () => {
     const db = 'mongodb://0.0.0.0:27017/todolistdb';
     try{    
-        console.log('Connecting to database...')
         await mongoose.connect(db, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
