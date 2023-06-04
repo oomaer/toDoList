@@ -31,6 +31,12 @@ const createTodo = async (req, res) => {
     }
 }
 
+/*
+    @desc get all todos of a user
+    @route GET /todo/get/:userId
+    @access Private
+    @required userId in params, authorization in header
+*/
 const getTodos = async (req, res) => {
     try {
         const userId = req.params.userId;
