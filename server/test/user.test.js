@@ -41,7 +41,7 @@ describe('User', () => {
             })
         })
 
-        describe('register new user', () => {
+        describe('when all of the details are valid', () => {
             it('should return 200 if not duplicate email', async () => {
                 const response = await supertest(app).post('/users/register').send({
                     name: 'test',
