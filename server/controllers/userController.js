@@ -2,9 +2,11 @@
 
 const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
+const { hashSync, compareSync } = require("bcrypt");
 const {checkValidEmail, checkValidPassword, checkValidName} = require('../utils/validityCheckers');
 require('dotenv').config();
 
+const saltRounds = 10;
 
 /*
     @desc Register a user
@@ -29,7 +31,7 @@ const registerUser = async (req, res) => {
             return;
         } 
 
-        const user = new User({ name, email, password });
+        const user = new User({ name, email, password: hashSync(req.body.password, saltRounds)});
         const newUser = await user.save();
 
         const token = jwt.sign({
