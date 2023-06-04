@@ -46,8 +46,38 @@ const getTodos = async (req, res) => {
     }
 }
 
+/*
+    @desc Change todo complete status
+    @route PUT /todo/changeComplete/:todoId
+    @access Private
+    @required completed in body, authorization in header
+*/
+const changeTodoComplete = async (req, res) => {
+    try{
+        const todoId = req.params.todoId;
+        if(req.body.completed === undefined){
+            res.status(400).json({success: false, message: 'Invalid request'});
+            return;
+        }
+        const updated = await Todo.findByIdAndUpdate(todoId, {completed: req.body.completed}, {new: true});
+        if(!updated){
+            res.status(404).json({success: false, message: 'Todo does not exist'});
+            return;
+        }
+        res.status(200).json({success: true, message: 'Todo updated successfully', todo: {description: updated.description, completed: updated.completed, id: updated._id}});
+    }
+    catch(error){
+        if(error.name === 'CastError'){
+            res.status(400).json({success: false, message: 'Invalid todo id'});
+            return;
+        }
+        res.status(500).json({success: false, message: 'Internal server error'});
+    }
+}
+
 
 module.exports = {
     createTodo,
-    getTodos
+    getTodos,
+    changeTodoComplete
 }
