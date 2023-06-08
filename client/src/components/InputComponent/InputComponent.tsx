@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { ReactElement, useState } from "react"
 
 
 const InputComponent = () => {
@@ -11,6 +11,7 @@ const InputComponent = () => {
     
     return(
         <input
+            
             value={value}
             onChange={onChange}
 
