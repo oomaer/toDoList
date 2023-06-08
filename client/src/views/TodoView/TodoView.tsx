@@ -1,11 +1,15 @@
+import InputComponent from "../../components/InputComponent/InputComponent"
+import AppLayout from "../../layouts/AppLayout"
 
 
 const TodoView = () => {
 
     return(
-        <div>
-            <h1>TodoView</h1>
-        </div>
+        <AppLayout>
+            <div className="w-full flex flex-col justify-center items-center">
+                <InputComponent />
+            </div>
+        </AppLayout>
     )
 
 }
