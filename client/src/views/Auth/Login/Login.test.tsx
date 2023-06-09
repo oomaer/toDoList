@@ -35,16 +35,6 @@ describe("Login View", () => {
         expect(errorMessage).toHaveTextContent("Please enter your password")
     })
 
-    test("display error on invalid password", async () => {
-        user.setup()
-        render(<Login />)
-        await user.type(screen.getByRole("textbox", {name: "Email"}), "testuser@gmail.com")
-        await user.type(screen.getByRole("textbox", {name: "Password"}), "test")
-        await user.click(screen.getByRole("button", {name: "Login"}))
-        const errorMessage = await screen.queryByTestId("error-message")
-        expect(errorMessage).toHaveTextContent("Password must be at least 6 characters long")
-    })
-
 
     test("no error message on successfull login", async () => {
         user.setup()

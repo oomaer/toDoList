@@ -1,4 +1,5 @@
-import InputComponent from "../../components/Inputs/InputComponent/InputComponent"
+
+import { useAuth } from "../../context/UserContext/UserContextProvider"
 import AppLayout from "../../layouts/AppLayout"
 
 

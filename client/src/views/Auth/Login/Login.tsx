@@ -4,18 +4,19 @@ import AppLayout from "../../../layouts/AppLayout"
 import { useAuth } from "../../../context/UserContext/UserContextProvider"
 import { LOGIN_USER } from "../../../api/api"
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 
 const Login = () => {
 
-    const {setUser} = useAuth();
+    const {setUser, setIsAuthenticated} = useAuth();
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
 
+    const navigate = useNavigate();
 
     const isInputValid = () => {
         if(email === ""){
@@ -30,10 +31,6 @@ const Login = () => {
             setErrorMessage("Please enter your password")
             return false
         }
-        if(password.length < 6){
-            setErrorMessage("Password must be at least 6 characters long")
-            return false
-        }
         return true
     }
 
@@ -42,7 +39,10 @@ const Login = () => {
         try{
             const res = await LOGIN_USER(email, password);
             if(res.data){
-                setUser(res.data)
+                setUser(res.data.user)
+                setIsAuthenticated(true)
+                localStorage.setItem("todoapp_token", res.data.jwt)
+                navigate('/')
             }
         }
         catch(err:any){

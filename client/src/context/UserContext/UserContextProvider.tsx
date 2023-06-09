@@ -11,6 +11,8 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
 
     const isRunned = useRef<boolean>(false);
 
+    console.log(user)
+    
     const authenticateToken = async () => {
         try{
             const response = await GET_USER();
