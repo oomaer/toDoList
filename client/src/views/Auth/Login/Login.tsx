@@ -9,7 +9,6 @@ import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
 
 const Login = () => {
 
-
     const {setUser} = useAuth();
 
     const [email, setEmail] = useState<string>("")
@@ -24,7 +23,7 @@ const Login = () => {
             }
         }
         catch(err:any){
-            console.log(err)
+            console.log(err.message)
             setErrorMessage(err.message)
         }
     }
@@ -54,7 +53,7 @@ const Login = () => {
                 </div>
 
                 <div>
-                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                    {errorMessage && <p data-testid="error-message" className="text-red-500">{errorMessage}</p>}
                 </div>
 
                 <div>
