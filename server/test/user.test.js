@@ -6,11 +6,11 @@ require('dotenv').config()
 
 describe('User', () => {
     
-    describe('POST /users/register', () => {
+    describe('POST /user/register', () => {
 
         describe('when email is invalid', () => {
             it('should return 400', async () => {
-                const response = await supertest(app).post('/users/register').send({
+                const response = await supertest(app).post('/user/register').send({
                     name: 'test',
                     email: 'test',
                     password: 'test1234'
@@ -21,7 +21,7 @@ describe('User', () => {
 
         describe('when password is invalid', () => {
             it('should return 400', async () => {
-                const response = await supertest(app).post('/users/register').send({
+                const response = await supertest(app).post('/user/register').send({
                     name: 'test',
                     email: 'testing1234@gmail.com',
                     password: 'test'
@@ -32,7 +32,7 @@ describe('User', () => {
 
         describe('when name is invalid', () => {
             it('should return 400', async () => {
-                const response = await supertest(app).post('/users/register').send({
+                const response = await supertest(app).post('/user/register').send({
                     name: 'te',
                     email: 'test@gmail.com',
                     password: 'test12345'
@@ -43,7 +43,7 @@ describe('User', () => {
 
         describe('when all of the details are valid', () => {
             it('should return 200 if not duplicate email', async () => {
-                const response = await supertest(app).post('/users/register').send({
+                const response = await supertest(app).post('/user/register').send({
                     name: 'test',
                     email: 'test@gmail.com',
                     password: 'test12345'
@@ -59,11 +59,11 @@ describe('User', () => {
 
     })
 
-    describe('POST /users/login', () => {
+    describe('POST /user/login', () => {
 
         describe('when user does not exist / invalid email', () => {
             it('should return 400', async () => {
-                const response = await supertest(app).post('/users/login').send({
+                const response = await supertest(app).post('/user/login').send({
                     email: 'test',
                     password: 'test1234'
                 })
@@ -73,7 +73,7 @@ describe('User', () => {
 
         describe('when invalid password entered', () => {
             it('should return 400', async () => {
-                const response = await supertest(app).post('/users/login').send({
+                const response = await supertest(app).post('/user/login').send({
                     email: 'test@gmail.com',
                     password: 'test123'
                 })
@@ -83,7 +83,7 @@ describe('User', () => {
 
         describe('when email and password are correct', () => {
             it('should return 200', async () => {
-                const response = await supertest(app).post('/users/login').send({
+                const response = await supertest(app).post('/user/login').send({
                     email: 'test@gmail.com',
                     password: 'test12345'
                 })
@@ -93,18 +93,18 @@ describe('User', () => {
 
     })
 
-    describe('GET /users/authenticate', () => {
+    describe('GET /user/authenticate', () => {
         
         describe('when jwt is not provided', () => {
             it('should return 401', async () => {
-                const response = await supertest(app).get('/users/authenticate')
+                const response = await supertest(app).get('/user/authenticate')
                 expect(response.statusCode).toBe(401)
             })
         })
 
         describe('when jwt is invalid', () => {
             it('should return 401', async () => {
-                const response = await supertest(app).get('/users/authenticate').set('authorization', 'Bearer test')
+                const response = await supertest(app).get('/user/authenticate').set('authorization', 'Bearer test')
                 expect(response.statusCode).toBe(401)
             })
         })
@@ -115,7 +115,7 @@ describe('User', () => {
                     id: '647c3a549ab5aa5376a8abb8',
                     email: 'test@gmail.com'
                 }, process.env.JWT_KEY)
-                const response = await supertest(app).get('/users/authenticate').set('authorization', `Bearer ${validToken}`)
+                const response = await supertest(app).get('/user/authenticate').set('authorization', `Bearer ${validToken}`)
                 expect(response.statusCode).toBe(200)
             })
         })

@@ -21,7 +21,7 @@ const main = async () => {
             useNewUrlParser: true,
             autoIndex: true, //make this also true
         });
-        app.use('/users', userRoute)
+        app.use('/user', userRoute)
         app.use('/todo', todoRoute)
 
         app.get('/', (req, res) => {
