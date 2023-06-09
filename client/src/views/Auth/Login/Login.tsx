@@ -7,11 +7,7 @@ const Login = () => {
         <AppLayout>
             <div>
 
-                <div>
-                    
-
-
-                </div>
+                
 
             </div>
         </AppLayout>

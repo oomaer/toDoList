@@ -16,6 +16,7 @@ describe("Primary Button", () => {
         expect(button).toBeInTheDocument();
     });
 
+
     test("Primary Button renders children correctly", () => {
         render(
             <PrimaryButton onClick={()=>{}}>
@@ -27,7 +28,8 @@ describe("Primary Button", () => {
         expect(button).toHaveTextContent("Click Me");
     })
 
-    test.only("Primary Button calls onClick when clicked", async () => {
+
+    test("Primary Button calls onClick when clicked", async () => {
         user.setup();
         const onClick = vi.fn();
         render(
@@ -40,5 +42,6 @@ describe("Primary Button", () => {
         await user.click(button);
         expect(onClick).toHaveBeenCalled();
     })
+
 
 })

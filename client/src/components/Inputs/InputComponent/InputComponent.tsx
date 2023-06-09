@@ -1,9 +1,13 @@
 import { useState } from "react"
 
+interface InputComponentProps {
+    value: string
+    setValue: (value: string) => void
+    placeholder?: string
+}
 
-const InputComponent = () => {
+const InputComponent = ({value, setValue, placeholder}: InputComponentProps) => {
     
-    const [value, setValue] = useState<string>("")
     
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value)
@@ -13,7 +17,7 @@ const InputComponent = () => {
         <input
             value={value}
             onChange={onChange}
-
+            placeholder={placeholder}
         >
         
         </input>
