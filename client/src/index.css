@@ -13,3 +13,8 @@ input:focus{
     outline: none !important;
     box-shadow: none !important;
 }
+
+input::placeholder{
+    font-size: small;
+    letter-spacing: 1px;
+}

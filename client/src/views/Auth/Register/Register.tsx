@@ -6,7 +6,7 @@ import AppLayout from "../../../layouts/AppLayout"
 import { useAuth } from "../../../context/UserContext/UserContextProvider"
 import { REGISTER_USER } from "../../../api/api"
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 
@@ -19,6 +19,7 @@ const Register = () => {
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
 
+    const navigate = useNavigate();
 
     const isInputValid = () => {
         if(name === ""){
@@ -48,12 +49,14 @@ const Register = () => {
         return true
     }
 
-    const handleLogin = async () => {
+    const handleRegister = async () => {
         if(!isInputValid()) return
         try{
             const res = await REGISTER_USER(name, email, password);
             if(res.data){
-                setUser(res.data)
+                setUser(res.data.user)
+                localStorage.setItem("todoapp_token", res.data.jwt)
+                navigate("/")
             }
         }
         catch(err:any){
@@ -117,7 +120,7 @@ const Register = () => {
                     </div>
 
                     <div className="flex justify-center mb-4">
-                        <PrimaryButton onClick={handleLogin}>
+                        <PrimaryButton onClick={handleRegister}>
                             Sign Up
                         </PrimaryButton>
                     </div>
