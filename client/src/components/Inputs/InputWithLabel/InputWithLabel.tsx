@@ -4,16 +4,11 @@ interface InputWithLabelProps {
     id: string
     label: string
     value: string
-    setValue: (value: string) => void
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     placeholder?: string
 }
 
-const InputWithLabel = ({value, setValue, placeholder, id, label}: InputWithLabelProps) => {
-    
-    
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
-    }
+const InputWithLabel = ({value, onChange, placeholder, id, label}: InputWithLabelProps) => {
     
     return(
         <div className="flex flex-col">
@@ -25,6 +20,7 @@ const InputWithLabel = ({value, setValue, placeholder, id, label}: InputWithLabe
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
+                className="border border-gray-300 rounded-[5px] p-2"
             >
             </input>
         </div>

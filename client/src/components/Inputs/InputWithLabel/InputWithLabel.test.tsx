@@ -8,7 +8,7 @@ import InputWithLabel from "./InputWithLabel";
 describe("Input Component with Label", () => {
 
     test("renders correctly", () => {
-        render(<InputWithLabel value="" setValue={()=>{}} label="test-label" id="test-input-1" />);
+        render(<InputWithLabel value="" onChange={()=>{}} label="test-label" id="test-input-1" />);
         const inputElement = screen.getByRole("textbox", {
             name: "test-label"
         });
@@ -17,7 +17,7 @@ describe("Input Component with Label", () => {
 
 
     test("has correct placeholder ", () => {
-        render(<InputWithLabel value="" setValue={()=>{}} label="label" id="test-input-2" placeholder="placeholder value" />);
+        render(<InputWithLabel value="" onChange={()=>{}} label="label" id="test-input-2" placeholder="placeholder value" />);
         const inputElement = screen.getByRole("textbox", {
             name: "label"
         });
@@ -27,18 +27,14 @@ describe("Input Component with Label", () => {
 
     test("calls onChange Correctly", async () => {
         
-        const setValue = (value: string) => {
-            return value;
-        };
+        const mockFunction = vi.fn();
 
-        const mockFunction = vi.fn(setValue);
-
-        render(<InputWithLabel value="" setValue={mockFunction} label="label" id="test-input-3" />);
+        render(<InputWithLabel value="" onChange={mockFunction} label="label" id="test-input-3" />);
         const inputElement = screen.getByRole("textbox", {
             name: "label"
         });
-        await user.type(inputElement, "w");
-        expect(mockFunction).toBeCalledWith("w");
+        await user.type(inputElement, "world");
+        expect(mockFunction).toBeCalledTimes(5);
 
     });
 

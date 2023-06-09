@@ -10,6 +10,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/" element={<TodoView />} />
                 <Route path="/login" element={<Login />} />
+        
             </Routes>
         </Router>
     )

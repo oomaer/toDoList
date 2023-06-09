@@ -30,39 +30,53 @@ const Login = () => {
 
     return(
         <AppLayout>
-            <div>
+            <div className="w-full flex justify-center items-center">
+                <div className="w-full max-w-[450px] flex flex-col bg-white p-8 lg:p-12 rounded-[10px] shadow-xl">
+                    
+                    <h1 className="text-3xl sm:text-4xl mb-8">
+                        <span className="text-[#7DA99F]">L</span>ogin
+                    </h1>
+                    <div className="mb-8">
+                        <div className="mb-4">
+                            <InputWithLabel 
+                                id="email-input"
+                                label="Email"
+                                value={email}
+                                onChange={(e) => {
+                                    setErrorMessage("")
+                                    setEmail(e.target.value)
+                                }}
+                                placeholder="Enter your email"
+                            />
+                        </div>
 
-                <div>
-                    <InputWithLabel 
-                        id="email-input"
-                        label="Email"
-                        value={email}
-                        setValue={setEmail}
-                        placeholder="Enter your email"
-                    />
+                        <div className="mb-4">
+                            <InputWithLabel 
+                                id="pass-input"
+                                label="Password"
+                                value={password}
+                                onChange={(e) => {
+                                    setErrorMessage("")
+                                    setPassword(e.target.value)
+                                }}
+                                placeholder="Enter your password"
+                            />
+                        </div>
+
+                        <div className={`${errorMessage ? 'max-h-[100px]': 'max-h-[0px]'} transition-all duration-300 ease-in-out`}>
+                            {errorMessage && <p data-testid="error-message" className="text-center text-sm text-red-500">{errorMessage}</p>}
+                        </div>
+
+                    </div>
+
+                    <div className="flex justify-center">
+                        <PrimaryButton onClick={handleLogin}>
+                            Login
+                        </PrimaryButton>
+                    </div>
+
+
                 </div>
-
-                <div>
-                    <InputWithLabel 
-                        id="pass-input"
-                        label="Password"
-                        value={password}
-                        setValue={setPassword}
-                        placeholder="Enter your password"
-                    />
-                </div>
-
-                <div>
-                    {errorMessage && <p data-testid="error-message" className="text-red-500">{errorMessage}</p>}
-                </div>
-
-                <div>
-                    <PrimaryButton onClick={handleLogin}>
-                        Login
-                    </PrimaryButton>
-                </div>
-
-
             </div>
         </AppLayout>
     )
