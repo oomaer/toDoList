@@ -13,7 +13,7 @@ describe("Input Component", () => {
 
     });
 
-    test.only("input component has correct value on text change", async () => {
+    test("input component has correct value on text change", async () => {
 
         render(<InputComponent />);
 
@@ -22,6 +22,8 @@ describe("Input Component", () => {
         expect(inputElement).toHaveValue("Hello World");
 
     });
+
+    
 
 });
 
