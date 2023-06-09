@@ -12,7 +12,7 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
     const isRunned = useRef<boolean>(false);
 
     const authenticateToken = async () => {
-        let token = localStorage.getItem('wp_token') as string;
+        let token = localStorage.getItem('todoapp_token') as string;
         if(token){
             try{
                 let response = await axios.get('/user/authenticate', {
@@ -45,11 +45,9 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
 
             isRunned.current = true;
             authenticateToken();
-  
+        }
         return () => {
             isRunned.current = true;
-        }
-
         }
     }, [])
 
@@ -63,7 +61,7 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
             authenticateToken,
         }}
         >
-        {children}
+            {children}
         </UserContext.Provider>
     );
 }
