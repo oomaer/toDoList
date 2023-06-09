@@ -1,11 +1,20 @@
+import AppLayout from "../../../layouts/AppLayout"
 
 
 
 const Login = () => {
     return(
-        <div>
-            Login View
-        </div>
+        <AppLayout>
+            <div>
+
+                <div>
+                    
+
+
+                </div>
+
+            </div>
+        </AppLayout>
     )
 }
 

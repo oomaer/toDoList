@@ -1,19 +1,12 @@
 import {rest} from 'msw';
+import { MOCK_GET_USER } from './mockresponses';
+
+
+const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
 
 export const handlers = [
-    // Handles a POST /login request
-    rest.post('/login', () => {
-        console.log('login handler');
-    }),
+    
+    // Handles a Authenticate User Request
+    rest.get(SERVER_URL + `/user/authenticate`, MOCK_GET_USER)
 
-    // Handles a GET /user request
-    rest.get('/user', (req, res, ctx) => {
-        return res(
-            // Respond with a 200 status code
-            ctx.status(200),
-            ctx.json({
-                username: 'admin',
-            })
-        )
-    }),
 ]
