@@ -40,3 +40,19 @@ export const MOCK_LOGIN_USER = (req:any, res:any, ctx:any) => {
         })
     )
 }
+
+export const MOCK_REGISTER_USER = (req:any, res:any, ctx:any) => {
+    return res(
+        ctx.status(200),
+        ctx.json({
+            success: true,
+            message: 'User Registered',
+            user: {
+                username: 'testuser',
+                email: 'testuser@gmail.com',
+                _id: '1234567890'
+            }
+        })
+    )
+}
+

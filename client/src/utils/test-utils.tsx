@@ -2,12 +2,14 @@
 import React, {ReactElement} from 'react'
 import {render, RenderOptions} from '@testing-library/react'
 import UserContextProvider from '../context/UserContext/UserContextProvider'
-
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const AllTheProviders = ({children}: {children: React.ReactNode}) => {
   return (
     <UserContextProvider>
+      <Router>
         {children}
+      </Router>
     </UserContextProvider>
   )
 }

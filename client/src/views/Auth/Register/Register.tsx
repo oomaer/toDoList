@@ -4,7 +4,7 @@ import { useState } from "react"
 import InputWithLabel from "../../../components/Inputs/InputWithLabel/InputWithLabel"
 import AppLayout from "../../../layouts/AppLayout"
 import { useAuth } from "../../../context/UserContext/UserContextProvider"
-import { LOGIN_USER, REGISTER_USER } from "../../../api/api"
+import { REGISTER_USER } from "../../../api/api"
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
 import { Link } from "react-router-dom"
 
@@ -71,6 +71,19 @@ const Register = () => {
                         <span className="text-blue-500">S</span>ign Up
                     </h1>
                     <div className="mb-8">
+                        <div className="mb-4">
+                            <InputWithLabel 
+                                id="name-input"
+                                label="Name"
+                                value={name}
+                                onChange={(e) => {
+                                    setErrorMessage("")
+                                    setName(e.target.value)
+                                }}
+                                placeholder="Sample Name"
+                            />
+                        </div>
+
                         <div className="mb-4">
                             <InputWithLabel 
                                 id="email-input"
