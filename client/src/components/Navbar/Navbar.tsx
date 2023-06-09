@@ -6,9 +6,9 @@ const Navbar = () => {
             <div className="flex items-center justify-between">
                 <h1>To Do List App</h1>
                 <div className="flex">
-                    <button>
+                    <a href="login">
                         Login
-                    </button>
+                    </a>
                 </div>
             </div>
         </nav>

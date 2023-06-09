@@ -17,7 +17,7 @@ const InputWithLabel = ({value, setValue, placeholder, id, label}: InputWithLabe
     
     return(
         <div className="flex flex-col">
-            <label className="mb-4" htmlFor={id}>
+            <label className="mb-1" htmlFor={id}>
                 {label}
             </label>
             <input
