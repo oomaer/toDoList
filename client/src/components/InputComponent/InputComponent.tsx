@@ -11,7 +11,6 @@ const InputComponent = () => {
     
     return(
         <input
-            
             value={value}
             onChange={onChange}
 
