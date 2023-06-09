@@ -4,6 +4,7 @@ import AppLayout from "../../../layouts/AppLayout"
 import { useAuth } from "../../../context/UserContext/UserContextProvider"
 import { LOGIN_USER } from "../../../api/api"
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
+import { Link } from "react-router-dom"
 
 
 
@@ -15,7 +16,29 @@ const Login = () => {
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
 
+
+    const isInputValid = () => {
+        if(email === ""){
+            setErrorMessage("Please enter your email")
+            return false
+        }
+        if(!validateEmail(email)){
+            setErrorMessage("Please enter a valid email")
+            return false
+        }
+        if(password === ""){
+            setErrorMessage("Please enter your password")
+            return false
+        }
+        if(password.length < 6){
+            setErrorMessage("Password must be at least 6 characters long")
+            return false
+        }
+        return true
+    }
+
     const handleLogin = async () => {
+        if(!isInputValid()) return
         try{
             const res = await LOGIN_USER(email, password);
             if(res.data){
@@ -34,7 +57,7 @@ const Login = () => {
                 <div className="w-full max-w-[450px] flex flex-col bg-white p-8 lg:p-12 rounded-[10px] shadow-xl">
                     
                     <h1 className="text-3xl sm:text-4xl mb-8">
-                        <span className="text-[#7DA99F]">L</span>ogin
+                        <span className="text-blue-500">L</span>ogin
                     </h1>
                     <div className="mb-8">
                         <div className="mb-4">
@@ -46,7 +69,7 @@ const Login = () => {
                                     setErrorMessage("")
                                     setEmail(e.target.value)
                                 }}
-                                placeholder="Enter your email"
+                                placeholder="sampleemail@gmail.com"
                             />
                         </div>
 
@@ -59,7 +82,7 @@ const Login = () => {
                                     setErrorMessage("")
                                     setPassword(e.target.value)
                                 }}
-                                placeholder="Enter your password"
+                                placeholder="S@mpl3P@ssw0rd"
                             />
                         </div>
 
@@ -69,10 +92,14 @@ const Login = () => {
 
                     </div>
 
-                    <div className="flex justify-center">
+                    <div className="flex justify-center mb-4">
                         <PrimaryButton onClick={handleLogin}>
                             Login
                         </PrimaryButton>
+                    </div>
+
+                    <div className="flex justify-end">
+                        <p className="text-sm text-gray-500">Don't have an account? <Link to="/register" className="text-blue-500 font-[500] cursor-pointer">Sign up</Link></p>
                     </div>
 
 
@@ -83,3 +110,13 @@ const Login = () => {
 }
 
 export default Login
+
+
+
+const validateEmail = (email:string) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+};
