@@ -1,5 +1,5 @@
 
-import {ReactNode, useEffect, useRef, useState } from "react";
+import {ReactNode, useContext, useEffect, useRef, useState } from "react";
 import UserContext from "./UserContext";
 import axios from "axios";
 
@@ -67,3 +67,8 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
 }
 
 export default UserContextProvider;
+
+
+export const useAuth = () => {
+    return useContext(UserContext);
+}
