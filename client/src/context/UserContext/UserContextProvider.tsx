@@ -1,7 +1,7 @@
 
 import {ReactNode, useContext, useEffect, useRef, useState } from "react";
 import UserContext from "./UserContext";
-import axios from "axios";
+import { GET_USER } from "../../api/api";
 
 
 const UserContextProvider = ({children}:{children:ReactNode}) => {
@@ -12,37 +12,26 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
     const isRunned = useRef<boolean>(false);
 
     const authenticateToken = async () => {
-        let token = localStorage.getItem('todoapp_token') as string;
-        if(token){
-            try{
-                let response = await axios.get('/user/authenticate', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                if(response.status === 200){
-                    setIsAuthenticated(true)
-                    setUser(response.data.user);
-                }
-                else{
-                    setIsAuthenticated(false)
-                }
+        try{
+            const response = await GET_USER();
+            if(response.data.success){
+                setUser(response.data.user);
+                setIsAuthenticated(true);
+                return;
             }
-            catch(err:any){
-                setIsAuthenticated(false)
-            }
+            setUser(null);
+            setIsAuthenticated(false);
         }
-        else{
-            setIsAuthenticated(false)
+        catch(error){
+            console.log(error);
+            setUser(null);
+            setIsAuthenticated(false);
         }
     }
 
     
     useEffect(() => {
         if(!isRunned.current){
-
             isRunned.current = true;
             authenticateToken();
         }

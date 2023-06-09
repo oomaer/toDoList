@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const serverApi = axios.create({
-    baseURL: import.meta.env.REACT_APP_BACKEND_SERVER_URL,
+    baseURL: "http://localhost:5000",
 });
 
 
@@ -13,9 +13,8 @@ const serverApi = axios.create({
 */
 export const poster = async (url:string, data?:any) => {
     let jwt = localStorage.getItem('todoapp_token') || '';
-    let res:any;
     try{
-        res = await serverApi.post(url, data, {headers: {
+        return await serverApi.post(url, data, {headers: {
             'Authorization': `Bearer ${jwt}`
         }})
     }
@@ -27,8 +26,6 @@ export const poster = async (url:string, data?:any) => {
         }
         throw err;
     }
-    
-    return res.data;
 }
 
 /*
@@ -38,9 +35,8 @@ export const poster = async (url:string, data?:any) => {
 */
 export const fetcher = async (url:string) => {
     let jwt = localStorage.getItem('todoapp_token') || '';
-    let res:any;
     try{
-        res = await serverApi.get(url, {headers: {
+        return await serverApi.get(url, {headers: {
             'Authorization': `Bearer ${jwt}`,
             "Access-Control-Allow-Origin": "*"
         }})
@@ -53,8 +49,6 @@ export const fetcher = async (url:string) => {
         }
         throw err;
     }
-    
-    return res.data;
 }
 
 /*
@@ -64,9 +58,8 @@ export const fetcher = async (url:string) => {
 */
 export const put = async (url:string, data?:any) => {
     let jwt = localStorage.getItem('todoapp_token') || '';
-    let res:any;
     try{
-        res = await serverApi.put(url, data, {headers: {
+        return await serverApi.put(url, data, {headers: {
             'Authorization': `Bearer ${jwt}`
         }})
     }
@@ -78,7 +71,6 @@ export const put = async (url:string, data?:any) => {
         }
         throw err;
     }
-    
-    return res.data;
+
 }
 

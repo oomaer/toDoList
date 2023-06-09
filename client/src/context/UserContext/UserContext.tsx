@@ -3,8 +3,8 @@ import { createContext } from "react";
 
 interface UserContextInterface{
     user: {
+        name: string;
         email: string;
-        
     },
     isAuthenticated: boolean | null;
     setUser: (user:any) => void;
@@ -14,8 +14,8 @@ interface UserContextInterface{
 
 const UserContext = createContext<UserContextInterface>({
     user: {
+        name: '',
         email:  '',
-        
     },
     isAuthenticated: null,
     setUser: () => {},
