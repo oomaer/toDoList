@@ -5,7 +5,10 @@ export const GET_USER = () => {
     return fetcher('/user/authenticate')
 }
 
+export const LOGIN_USER = (email:string, password:string) => {
+    return poster('/user/login', {email, password})
+}
 
-export const LOGIN_USER = (username:string, password:string) => {
-    return poster('/user/login', {username, password})
+export const REGISTER_USER = (name:string, email:string, password:string) => {
+    return poster('/user/register', {name, email, password})
 }
