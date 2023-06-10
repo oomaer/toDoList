@@ -10,14 +10,14 @@ const UserProfileCard = ({ user }: {user: User | null}) => {
                 <>
                     <img className="w-32 h-32 rounded-full mb-4" 
                         src={`https://robohash.org/${user._id}`} />
-                
+                    <p className="text-2xl text-white">{user.name}</p>
                 </>
             ): (
                 <>
                     <img className="w-32 h-32 rounded-full mb-4 shadow-10" 
                         src={`https://robohash.org/guestuser`}
                     />
-                    <p className="text-2xl text-white">Guest User</p>
+                    <p className="text-xl text-white">Guest User</p>
                 </>
             )}
 

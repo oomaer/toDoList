@@ -26,15 +26,17 @@ const TodoItem = ({item, handleCheck, handleDelete}: TodoItemProps) => {
     
     return(
         <div className="w-full flex items-center w-full p-4 border-b-[1px]">
-            <button
-                className={`rounded-full w-4 h-4 border-[2px] border-primary-400 text-white flex items-center justify-center mr-4 ${item.completed ? "bg-primary-400" : ""}`}
-                onClick={() => {handleCheck(item)}}
-                aria-label="check"
-            >
-                {item.completed ? (
-                    <BsCheck size={16} />
-                ): null}
-            </button>
+            <div>
+                <button
+                    className={`rounded-full w-4 h-4 border-[2px] border-primary-400 text-white flex items-center justify-center mr-4 ${item.completed ? "bg-primary-400" : ""}`}
+                    onClick={() => {handleCheck(item)}}
+                    aria-label="check"
+                >
+                    {item.completed ? (
+                        <BsCheck size={16} />
+                    ): null}
+                </button>
+            </div>
             <div className="flex-grow mr-4">
                 {item.description}
             </div>

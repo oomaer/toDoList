@@ -70,8 +70,8 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
         <div className="flex bg-white bg-opacity-50 overflow-hidden shadow-3 rounded-[10px]">
             <motion.div 
                 initial={{maxHeight:0}}
-                animate={{maxHeight:600}}
-            className="w-full h-[50vh] max-h-[500px] overflow-y-auto custom-scrollbar"> 
+                animate={{maxHeight:450}}
+            className="w-full h-[50vh] max-h-[450px] overflow-y-auto custom-scrollbar"> 
                 {items.map((item, index) => {
                     return(
                         <TodoItem key={index} item={item} handleCheck={handleCheck} handleDelete={handleDelete} />
