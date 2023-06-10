@@ -21,6 +21,10 @@ export const GET_TODOS = (userId: string) => {
     return fetcher(`/todo/get/${userId}`)
 }
 
+export const GET_FILTERED_TODOS = (userId: string, filter:string) => {
+    return fetcher(`/todo/getbyfilter/${userId}/${filter}`)
+}
+
 
 export const UPDATE_TODO = (todoId: string, completed: boolean) => {
     return put(`/todo/changecompletestatus/${todoId}`, {completed})

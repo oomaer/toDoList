@@ -6,7 +6,7 @@ import SelectComponent from "../../components/SelectComponent/SelectComponent"
 import TodoItems from "./TodoItems"
 import { TodoType } from "../../types/todo.type"
 import { useAuth } from "../../context/UserContext/UserContextProvider"
-import { CREATE_TODO, GET_TODOS } from "../../api/api"
+import { CREATE_TODO, GET_FILTERED_TODOS } from "../../api/api"
 import { toast } from "react-toastify"
 
 
@@ -62,7 +62,7 @@ const TodoView = () => {
         
         const getTodos = async () => {
             try{
-                const response = await GET_TODOS(user?._id || "")
+                const response = await GET_FILTERED_TODOS(user?._id || "", filter.value)
                 if(response.data.success){
                     setTodoItems(response.data.todos)
                     return
@@ -87,7 +87,7 @@ const TodoView = () => {
             <div className="w-full flex justify-center items-center">
                 <div className="w-full max-w-[500px] flex flex-col justify-center items-center">
                     
-                    <div className="flex w-full">
+                    <div className="flex w-full mb-4">
                         <div className="flex flex-grow">
                             <InputComponent
                                 value={todo}
@@ -102,7 +102,7 @@ const TodoView = () => {
                         </button>
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full mb-4">
                         <SelectComponent
                             value={filter}
                             setValue={setFilter}
