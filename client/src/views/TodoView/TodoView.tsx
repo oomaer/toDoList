@@ -1,12 +1,12 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import InputComponent from "../../components/Inputs/InputComponent/InputComponent"
 import AppLayout from "../../layouts/AppLayout"
 import SelectComponent from "../../components/SelectComponent/SelectComponent"
 import TodoItems from "./TodoItems"
 import { TodoType } from "../../types/todo.type"
 import { useAuth } from "../../context/UserContext/UserContextProvider"
-import { CREATE_TODO } from "../../api/api"
+import { CREATE_TODO, GET_TODOS } from "../../api/api"
 import { toast } from "react-toastify"
 
 
@@ -57,6 +57,28 @@ const TodoView = () => {
         } 
     }
 
+
+    useEffect(() => {
+        
+        const getTodos = async () => {
+            try{
+                const response = await GET_TODOS(user?._id || "")
+                if(response.data.success){
+                    setTodoItems(response.data.todos)
+                    return
+                }
+            }catch(error:any){
+                console.log(error);
+                toast.error(error.message)
+            }
+        }
+        
+        if(isAuthenticated && user){
+            getTodos()
+        }
+
+    }, [isAuthenticated, user])
+
     return(
         <AppLayout>
             <div className="w-full flex justify-center items-center">
@@ -86,7 +108,7 @@ const TodoView = () => {
                     </div>
 
                     <div className="w-full">
-                        <TodoItems items={todoItems} />
+                        <TodoItems items={todoItems} setItems={setTodoItems} />
                     </div>
                     
 

@@ -1,5 +1,5 @@
 
-import {fetcher, poster} from './ApiHelpers';
+import {fetcher, poster, put} from './ApiHelpers';
 
 export const GET_USER = () => {
     return fetcher('/user/authenticate')
@@ -18,5 +18,14 @@ export const CREATE_TODO = (description:string, userId: string) => {
 }
 
 export const GET_TODOS = (userId: string) => {
-    return fetcher(`/todo/${userId}`)
+    return fetcher(`/todo/get/${userId}`)
+}
+
+
+export const UPDATE_TODO = (todoId: string, completed: boolean) => {
+    return put(`/todo/changecompletestatus/${todoId}`, {completed})
+}
+
+export const DELETE_TODO = (todoId: string) => {
+    return put(`/todo/delete/${todoId}`)
 }
