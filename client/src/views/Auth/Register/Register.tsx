@@ -97,6 +97,7 @@ const Register = () => {
                                     setEmail(e.target.value)
                                 }}
                                 placeholder="sampleemail@gmail.com"
+                                type="email"
                             />
                         </div>
 
@@ -110,6 +111,7 @@ const Register = () => {
                                     setPassword(e.target.value)
                                 }}
                                 placeholder="S@mpl3P@ssw0rd"
+                                type="password"
                             />
                         </div>
 

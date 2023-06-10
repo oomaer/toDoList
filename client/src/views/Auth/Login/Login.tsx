@@ -69,6 +69,7 @@ const Login = () => {
                                     setErrorMessage("")
                                     setEmail(e.target.value)
                                 }}
+                                type="email"
                                 placeholder="sampleemail@gmail.com"
                             />
                         </div>
@@ -82,6 +83,7 @@ const Login = () => {
                                     setErrorMessage("")
                                     setPassword(e.target.value)
                                 }}
+                                type="password"
                                 placeholder="S@mpl3P@ssw0rd"
                             />
                         </div>

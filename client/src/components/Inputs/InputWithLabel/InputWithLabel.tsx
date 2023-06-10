@@ -6,9 +6,10 @@ interface InputWithLabelProps {
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     placeholder?: string
+    type?: string
 }
 
-const InputWithLabel = ({value, onChange, placeholder, id, label}: InputWithLabelProps) => {
+const InputWithLabel = ({value, onChange, placeholder, id, label, type}: InputWithLabelProps) => {
     
     return(
         <div className="flex flex-col">
@@ -20,6 +21,7 @@ const InputWithLabel = ({value, onChange, placeholder, id, label}: InputWithLabe
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
+                type={type? type : "text"}
                 className="border border-gray-300 rounded-[5px] p-2"
             >
             </input>

@@ -95,6 +95,7 @@ const TodoView = () => {
                                 value={todo}
                                 onChange={(e) => setTodo(e.target.value)}
                                 placeholder="Add a todo"
+                                onEnter={handleAddItem}
                             />
                         </div>
                         <button
