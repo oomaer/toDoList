@@ -41,7 +41,7 @@ describe("Login View", () => {
         render(<Login />)
  
         await user.type(screen.getByRole("textbox", {name: "Email"}), "testuser@gmail.com")
-        await user.type(screen.getByRole("textbox", {name: "Password"}), "testpassword")
+        await user.type(screen.getByLabelText("Password"), "testpassword")
         await user.click(screen.getByRole("button", {name: "Login"}))
 
         const errorMessage = await screen.queryByTestId("error-message")
@@ -61,7 +61,7 @@ describe("Login View", () => {
         )
         
         await user.type(screen.getByRole("textbox", {name: "Email"}), "testuser@gmail.com")
-        await user.type(screen.getByRole("textbox", {name: "Password"}), "testpassword")
+        await user.type(screen.getByLabelText("Password"), "testpassword")
         await user.click(screen.getByRole("button", {name: "Login"}))
 
         const errorMessage = await screen.findByTestId("error-message")

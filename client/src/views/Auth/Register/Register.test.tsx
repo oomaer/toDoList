@@ -52,7 +52,7 @@ describe("Register View", () => {
         render(<Register />)
         await user.type(screen.getByRole("textbox", {name: "Name"}), "testuser")
         await user.type(screen.getByRole("textbox", {name: "Email"}), "testuser@gmail.com")
-        await user.type(screen.getByRole("textbox", {name: "Password"}), "test")
+        await user.type(screen.getByLabelText("Password"), "test")
         await user.click(screen.getByRole("button", {name: "Sign Up"}))
         const errorMessage = await screen.queryByTestId("error-message")
         expect(errorMessage).toHaveTextContent("Password must be at least 6 characters long")
@@ -70,7 +70,7 @@ describe("Register View", () => {
         
         await user.type(screen.getByRole("textbox", {name: "Name"}), "testuser")
         await user.type(screen.getByRole("textbox", {name: "Email"}), "testuser@gmail.com")
-        await user.type(screen.getByRole("textbox", {name: "Password"}), "testpassword")
+        await user.type(screen.getByLabelText("Password"), "testpassword")
         await user.click(screen.getByRole("button", {name: "Sign Up"}))
 
         const errorMessage = await screen.findByTestId("error-message")
@@ -85,7 +85,7 @@ describe("Register View", () => {
 
         await user.type(screen.getByRole("textbox", {name: "Name"}), "testuser")
         await user.type(screen.getByRole("textbox", {name: "Email"}), "testuser@gmail.com")
-        await user.type(screen.getByRole("textbox", {name: "Password"}), "testpassword")
+        await user.type(screen.getByLabelText("Password"), "testpassword")
         await user.click(screen.getByRole("button", {name: "Sign Up"}))
 
         const errorMessage = await screen.queryByTestId("error-message")
