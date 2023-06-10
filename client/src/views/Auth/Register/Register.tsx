@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 const Register = () => {
 
-    const {setUser} = useAuth();
+    const {setUser, setIsAuthenticated} = useAuth();
 
     const [name, setName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
@@ -55,6 +55,7 @@ const Register = () => {
             const res = await REGISTER_USER(name, email, password);
             if(res.data){
                 setUser(res.data.user)
+                setIsAuthenticated(true)
                 localStorage.setItem("todoapp_token", res.data.jwt)
                 navigate("/")
             }

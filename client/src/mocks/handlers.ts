@@ -2,7 +2,7 @@ import {rest} from 'msw';
 import { MOCK_GET_USER, MOCK_LOGIN_USER } from './mockresponses';
 
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
+const SERVER_URL = import.meta.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
 
 export const handlers = [
     

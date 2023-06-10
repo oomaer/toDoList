@@ -11,7 +11,7 @@
     "supertest": "^6.3.3"
   },
   "scripts": {
-    "test": "jest --watchAll --verbose",
+    "test": "jest",
     "start": "node index.js"
   }
 }

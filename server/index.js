@@ -14,11 +14,12 @@ const userRoute = require('./routes/userRoute');
 const todoRoute = require('./routes/todoRoute');
 
 const main = async () => {
-    const db = 'mongodb://0.0.0.0:27017/todolistdb';
+    const db = `${process.env.MONGO_URI}`;
     try{    
         await mongoose.connect(db, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
+            dbName: 'todo'
         });
         app.use('/user', userRoute)
         app.use('/todo', todoRoute)
@@ -31,7 +32,7 @@ const main = async () => {
     
         if(process.env.Node_ENV!=='test'){
             app.listen(PORT, () => {
-                console.log('Example app listening on port '+PORT+'!')
+                console.log('App listening on port '+PORT+'!')
             })
         }
 

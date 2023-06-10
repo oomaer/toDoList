@@ -1,8 +1,7 @@
 import axios from "axios";
 
-
 const serverApi = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: import.meta.env.REACT_APP_SERVER_URL || 'http://localhost:5000',
 });
 
 

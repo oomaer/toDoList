@@ -69,7 +69,7 @@ const getTodosByDate = async (req, res) => {
         const todos = await Todo.find({user: userId, createdAt: {
             $gte: new Date(date),
             $lt: new Date(date).setDate(new Date(date).getDate() + 1)
-        }});
+        }}).sort({createdAt: -1});
         res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
     }
     catch(error){
@@ -93,6 +93,7 @@ const getTodosByFilter = async (req, res) => {
         const filter = req.params.filter;
 
         let startDate = new Date();
+        startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0, 0, 0);
         if(filter === 'week'){
             startDate.setDate(startDate.getDate() - 7);
         }
@@ -102,7 +103,7 @@ const getTodosByFilter = async (req, res) => {
 
         const todos = await Todo.find({user: userId, createdAt: {
             $gte: new Date(startDate),
-        }});
+        }}).sort({createdAt: -1});
         res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
     }
     catch(error){

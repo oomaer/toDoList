@@ -4,7 +4,7 @@ import Login from './Login'
 import { render, screen } from '../../../utils/test-utils'
 import user from '@testing-library/user-event'
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:5000"
+const SERVER_URL = import.meta.env.REACT_APP_SERVER_URL || "http://localhost:5000"
 
 describe("Login View", () => {
 
