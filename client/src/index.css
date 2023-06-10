@@ -44,6 +44,6 @@ input::placeholder{
 .custom-scrollbar::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
-	background-color: #D65DB1;
+	background-color: #00BAFC;
 	background-image: black;
 }
