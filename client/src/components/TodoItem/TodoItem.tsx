@@ -56,7 +56,7 @@ const TodoItem = ({item, handleCheck, handleDelete}: TodoItemProps) => {
                             initial={{opacity: 0, scale: 0}}
                             animate={{opacity: 1, scale: 1}}
                             exit={{opacity: 0, scale: 0}}
-                            className="absolute p-2 rounded-[8px] text-sm w-[100px] right-0 bg-white shadow-2xl origin-top-right"
+                            className="absolute p-2 rounded-[8px] text-sm w-[100px] right-0 bg-white bg-opacity-50 shadow-2xl origin-top-right"
                             onClick={() => {
                                 handleDelete(item)
                                 setShowMenu(false)
