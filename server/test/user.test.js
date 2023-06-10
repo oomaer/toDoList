@@ -4,6 +4,7 @@ const { app } = require('../index')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
+
 describe('User', () => {
     
     describe('POST /user/register', () => {
@@ -42,18 +43,18 @@ describe('User', () => {
         })
 
         describe('when all of the details are valid', () => {
-            it('should return 200 if not duplicate email', async () => {
+            it('should return 201, 400 if using same email', async () => {
                 const response = await supertest(app).post('/user/register').send({
                     name: 'test',
                     email: 'test@gmail.com',
                     password: 'test12345'
                 })
-                if(response.body.success === false && response.body.message === 'Email already exists'){
+                if(response.body.message === 'Account already exists'){
                     expect(response.statusCode).toBe(400)
+                    return
                 }
-                else{
-                    expect(response.statusCode).toBe(201)
-                }
+                expect(response.statusCode).toBe(201)
+
             })
         })
 
@@ -112,7 +113,6 @@ describe('User', () => {
         describe('when jwt is valid', () => {
             it('should return 200', async () => {
                 const validToken = jwt.sign({
-                    id: '647c3a549ab5aa5376a8abb8',
                     email: 'test@gmail.com'
                 }, process.env.JWT_KEY)
                 const response = await supertest(app).get('/user/authenticate').set('authorization', `Bearer ${validToken}`)

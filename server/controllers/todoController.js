@@ -1,7 +1,6 @@
 
 
 const Todo = require('../models/TodoModel');
-const { getUserIdFromJwt } = require('../utils/getUserIdFromJwt');
 const {checkValidTodo} = require('../utils/validityCheckers');
 
 /*
@@ -12,19 +11,24 @@ const {checkValidTodo} = require('../utils/validityCheckers');
 */
 const createTodo = async (req, res) => {
     try {
-        const {description} = req.body;
+        const {userId, description} = req.body;
         if(!checkValidTodo(description)){
             res.status(400).json({success: false, message: 'Invalid todo'});
             return;
         }
-        const userId = getUserIdFromJwt(req.headers.authorization)
+    
+        if(!userId){
+            res.status(400).json({success: false, message: 'Error in creating todo'});
+            return;
+        }
+        
         const todo = new Todo({
             description,
             completed: false,
             user: userId
         })
-        await todo.save();
-        res.status(200).json({success: true, message: 'Todo created successfully', todo: {description: todo.description, completed: todo.completed, id: todo._id}});
+        const createdTodo = await todo.save();
+        res.status(200).json({success: true, message: 'Todo created successfully', todo: createdTodo});
     }
     catch(error){
         res.status(500).json({success: false, message: 'Internal server error'});
@@ -65,6 +69,39 @@ const getTodosByDate = async (req, res) => {
         const todos = await Todo.find({user: userId, createdAt: {
             $gte: new Date(date),
             $lt: new Date(date).setDate(new Date(date).getDate() + 1)
+        }});
+        res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
+    }
+    catch(error){
+        if(error.name === 'CastError'){
+            res.status(400).json({success: false, message: 'Invalid data provided by user'});
+            return;
+        }
+        res.status(500).json({success: false, message: 'Internal server error'});
+    }
+}
+
+/*
+    @desc Get todos of a specific date
+    @route GET /todo/getbydate/:userId/:date
+    @access Private
+    @required userId in params, date in params, authorization in header
+*/
+const getTodosByFilter = async (req, res) => {
+    try{
+        const userId = req.params.userId;
+        const filter = req.params.filter;
+
+        let startDate = new Date();
+        if(filter === 'week'){
+            startDate.setDate(startDate.getDate() - 7);
+        }
+        else if(filter === 'month'){
+            startDate.setDate(startDate.getDate() - 30);
+        }
+
+        const todos = await Todo.find({user: userId, createdAt: {
+            $gte: new Date(startDate),
         }});
         res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
     }
@@ -137,6 +174,7 @@ module.exports = {
     createTodo,
     getTodos,
     getTodosByDate,
+    getTodosByFilter,
     changeTodoComplete,
     deleteTodoById
 }

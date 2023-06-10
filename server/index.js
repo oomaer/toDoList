@@ -19,7 +19,6 @@ const main = async () => {
         await mongoose.connect(db, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
-            autoIndex: true, //make this also true
         });
         app.use('/user', userRoute)
         app.use('/todo', todoRoute)
