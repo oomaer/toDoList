@@ -22,6 +22,7 @@ const TodoView = () => {
     const {user, isAuthenticated} = useAuth()
 
 
+    //method called when add button is clicked
     const handleAddItem = async () => {
         
         if(todo === "") return
@@ -59,6 +60,11 @@ const TodoView = () => {
     }
 
 
+    /*
+        This useEffect will help us to fetch todos from the server
+        If the user is authenticated, we will fetch todos from the server
+        Also fetches todos if the filter value changes
+    */
     useEffect(() => {
         
         const getTodos = async () => {

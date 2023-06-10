@@ -18,6 +18,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    //checks is all inputs are valid
     const isInputValid = () => {
         if(email === ""){
             setErrorMessage("Please enter your email")
@@ -34,6 +35,7 @@ const Login = () => {
         return true
     }
 
+    //method called when login button is clicked
     const handleLogin = async () => {
         if(!isInputValid()) return
         try{

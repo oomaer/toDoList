@@ -21,6 +21,7 @@ const Register = () => {
 
     const navigate = useNavigate();
 
+    //checks is all inputs are valid
     const isInputValid = () => {
         if(name === ""){
             setErrorMessage("Please enter your name")
@@ -49,6 +50,7 @@ const Register = () => {
         return true
     }
 
+    //method called when register button is clicked
     const handleRegister = async () => {
         if(!isInputValid()) return
         try{
