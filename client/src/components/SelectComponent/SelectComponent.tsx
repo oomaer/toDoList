@@ -14,7 +14,7 @@ interface SelectComponentProps {
 
 const SelectComponent = ({value, setValue, items}: SelectComponentProps) => {
     
-    const [showOptions, setShowOptions] = useState<boolean>(true)
+    const [showOptions, setShowOptions] = useState<boolean>(false)
 
     const selectContainerRef = useRef(null);
 
@@ -46,16 +46,17 @@ const SelectComponent = ({value, setValue, items}: SelectComponentProps) => {
                     animate={{opacity: 1, height: "auto"}}
                     exit={{opacity: 0, height: 0}} 
                     className={`w-full bg-[#bab29c] overflow-hidden text-white rounded-[12px] shadow-2xl absolute`}>
-
                     {items.map((item, index) => {
                         return(
-                            <button 
-                                key={index}
-                                className='w-full p-4 text-start hover:bg-[#908771] hover:text-white'
-                                onClick={() => handleOptionClick(item)}
-                            >
-                                {item.label}
-                            </button>
+                            <li key={index} className='list-none'>
+                                <button 
+                                    key={index}
+                                    className='w-full p-4 text-start hover:bg-[#908771] hover:text-white'
+                                    onClick={() => handleOptionClick(item)}
+                                >
+                                    {item.label}
+                                </button>
+                            </li>
                         )
                     })}
                 </motion.div>

@@ -36,8 +36,9 @@ const TodoView = () => {
                             setValue={setFilter}
                             items={filterItems}
                         />
-
                     </div>
+
+                    
 
                 </div>
 
