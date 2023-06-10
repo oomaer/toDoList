@@ -9,7 +9,7 @@ const TodoView = () => {
 
     const [todo, setTodo] = useState<string>("")
 
-    const [date, setDate] = useState<{value:string, label:string}>(dateItems[0])
+    const [filter, setFilter] = useState<{value:string, label:string}>(filterItems[0])
 
 
     return(
@@ -32,9 +32,9 @@ const TodoView = () => {
 
                     <div className="w-full">
                         <SelectComponent
-                            value={date}
-                            onChange={(e) => setDate({value: e.target.value, label: "to do today"})}
-                            items={dateItems}
+                            value={filter}
+                            setValue={setFilter}
+                            items={filterItems}
                         />
 
                     </div>
@@ -51,7 +51,7 @@ export default TodoView
 
 
 
-const dateItems = [
+const filterItems = [
     {value: "today", label: "to do today"},
     {value: "week", label: "to do this week"},
     {value: "month", label: "to do this month"},
