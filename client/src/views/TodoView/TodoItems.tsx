@@ -7,7 +7,7 @@ import {motion} from 'framer-motion'
 
 const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[])=>void}) => {
 
-    const {isAuthenticated, user} = useAuth();
+    const {isAuthenticated} = useAuth();
 
     const handleCheck = async (todo: TodoType) => {
         if(isAuthenticated){
@@ -18,6 +18,7 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
                     let tempItems = [...items]
                     let index = tempItems.findIndex((item) => item._id === todo._id)
                     tempItems[index].completed = !tempItems[index].completed
+                    tempItems[index].updatedAt = new Date().toString()
                     setItems(tempItems)
                 }
             }
@@ -30,6 +31,7 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
             let tempItems = [...items]
             let index = tempItems.findIndex((item) => item._id === todo._id)
             tempItems[index].completed = !tempItems[index].completed
+            tempItems[index].updatedAt = new Date().toString()
             setItems(tempItems)
         }
     }

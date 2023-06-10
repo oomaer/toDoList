@@ -4,6 +4,7 @@ import { CiMenuKebab } from "react-icons/ci"
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useOutsideAlerter from "../hooks/useOutsideAlerter";
+import moment from "moment";
 
 
 interface TodoItemProps {
@@ -38,7 +39,12 @@ const TodoItem = ({item, handleCheck, handleDelete}: TodoItemProps) => {
                 </button>
             </div>
             <div className="flex-grow mr-4">
-                {item.description}
+                <p>{item.description}</p>
+                <div className={`flex items-center ${item.completed?"max-h-[24px]": "max-h-[0px]"} transition-all`}>
+                    {item.completed && (
+                        <p className="text-xs text-gray-400">Completed {moment(item.updatedAt).fromNow()}</p>
+                    )}
+                </div>
             </div>
             <div className="relative" ref={menuButtonRef}>
                 <button className="flex" aria-label="menu" onClick={()=>setShowMenu(b=>!b)}>
