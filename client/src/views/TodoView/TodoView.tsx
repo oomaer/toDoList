@@ -76,6 +76,9 @@ const TodoView = () => {
         if(isAuthenticated && user){
             getTodos()
         }
+        else{
+            setTodoItems([])
+        }
 
     }, [isAuthenticated, user])
 
