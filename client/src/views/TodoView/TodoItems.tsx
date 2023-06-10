@@ -3,6 +3,7 @@ import TodoItem from "../../components/TodoItem/TodoItem";
 import { useAuth } from "../../context/UserContext/UserContextProvider";
 import { TodoType } from "../../types/todo.type";
 import { toast } from 'react-toastify'
+import {motion} from 'framer-motion'
 
 const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[])=>void}) => {
 
@@ -54,20 +55,29 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
         }
     }
 
+
+    if(items.length === 0){
+        return(
+            <div className="h-[50vh] max-h-[100px] overflow-y-auto shadow-3 rounded-[10px] bg-white bg-opacity-50"> 
+                <p className="p-4">
+                    Wow, its empty!
+                </p>
+            </div>
+        )
+    }
+
     return(
-        <div className="bg-white rounded-[12px] shadow-2xl overflow-hidden h-[50vh] max-h-[600px] ">
-            {items.length === 0 ? (
-                <p className="p-4">Wow, its empty</p>
-            ): (
-                <>
+        <div className="flex bg-white bg-opacity-50 overflow-hidden shadow-3 rounded-[10px]">
+            <motion.div 
+                initial={{maxHeight:0}}
+                animate={{maxHeight:600}}
+            className="w-full h-[50vh] max-h-[500px] overflow-y-auto custom-scrollbar"> 
                 {items.map((item, index) => {
                     return(
                         <TodoItem key={index} item={item} handleCheck={handleCheck} handleDelete={handleDelete} />
                     )
                 })}
-                </>
-            )}
-            
+            </motion.div>
         </div>
     )
 

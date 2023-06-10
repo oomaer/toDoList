@@ -8,7 +8,7 @@ const PrimaryButton = ({children, onClick}: PrimaryButtonProps) => {
     return (
         <button
          onClick={onClick}
-         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+         className="w-full bg-primary-400 hover:bg-primary-500 text-white font-bold py-2 px-4 rounded">
             {children}
         </button>
     )

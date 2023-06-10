@@ -54,10 +54,10 @@ const Login = () => {
     return(
         <AppLayout>
             <div className="w-full flex justify-center items-center">
-                <div className="w-full max-w-[450px] flex flex-col bg-white p-8 lg:p-12 rounded-[10px] shadow-xl">
+                <div className="w-full max-w-[450px] flex flex-col bg-white p-8 lg:p-12 rounded-[10px] shadow-3">
                     
                     <h1 className="text-3xl sm:text-4xl mb-8">
-                        <span className="text-blue-500">L</span>ogin
+                        <span className="text-primary-500">L</span>ogin
                     </h1>
                     <div className="mb-8">
                         <div className="mb-4">

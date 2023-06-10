@@ -6,7 +6,7 @@ function App() {
   
 
   return (
-    <div className="App bg-[#ad9f82]">
+    <div className="App">
       <AppRoutes />
       <ToastContainer position="bottom-right" autoClose={2000} />
     </div>

@@ -76,18 +76,15 @@ const TodoView = () => {
         if(isAuthenticated && user){
             getTodos()
         }
-        else{
-            setTodoItems([])
-        }
 
-    }, [isAuthenticated, user])
+    }, [isAuthenticated, user, filter])
 
     return(
         <AppLayout>
             <div className="w-full flex justify-center items-center">
                 <div className="w-full max-w-[500px] flex flex-col justify-center items-center">
                     
-                    <div className="flex w-full mb-4">
+                    <div className="flex w-full mb-2">
                         <div className="flex flex-grow">
                             <InputComponent
                                 value={todo}
@@ -97,12 +94,12 @@ const TodoView = () => {
                         </div>
                         <button
                             onClick={handleAddItem}
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">
+                            className="bg-primary-400 hover:bg-primary-500 shadow-3 text-white px-4 py-2 rounded-[6px] ml-2">
                             Add
                         </button>
                     </div>
 
-                    <div className="w-full mb-4">
+                    <div className="w-full mb-2">
                         <SelectComponent
                             value={filter}
                             setValue={setFilter}

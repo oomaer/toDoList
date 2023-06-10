@@ -12,7 +12,7 @@ const InputComponent = ({value, onChange, placeholder}: InputComponentProps) => 
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className="w-full border border-gray-300 rounded-[5px] p-2"
+            className="w-full border border-gray-300 rounded-[5px] p-2 shadow-3 bg-white bg-opacity-50"
         >    
         </input>
     )

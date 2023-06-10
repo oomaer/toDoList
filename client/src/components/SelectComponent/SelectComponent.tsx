@@ -31,12 +31,12 @@ const SelectComponent = ({value, setValue, items}: SelectComponentProps) => {
         <div className="w-full relative" ref={selectContainerRef}>
             <button
                 onClick={() => setShowOptions(!showOptions)} 
-                className="w-full text-start flex items-center p-4 rounded-[12px] bg-[#bab29c] shadow-2xl text-[#908771]">      
-                <HiOutlineMenu size={16} className="" />
-                <div className='flex-grow mx-2 text-white'>
+                className="w-full text-start flex items-center p-4 rounded-[12px] bg-primary-400 hover:bg-primary-500 text-white shadow-3">      
+                <HiOutlineMenu size={20} className="" />
+                <div className='flex-grow mx-2 text-white mt-[2px]'>
                     {value.label}
                 </div>
-                <BiChevronDown size={16} />
+                <BiChevronDown size={20} />
             </button>
 
             <AnimatePresence>
@@ -45,13 +45,13 @@ const SelectComponent = ({value, setValue, items}: SelectComponentProps) => {
                     initial={{opacity: 0, height: 0}}
                     animate={{opacity: 1, height: "auto"}}
                     exit={{opacity: 0, height: 0}} 
-                    className={`w-full bg-[#bab29c] overflow-hidden text-white rounded-[12px] shadow-2xl absolute`}>
+                    className={`w-full overflow-hidden mt-1 bg-primary-400 text-white rounded-[12px] shadow-10 absolute z-[2]`}>
                     {items.map((item, index) => {
                         return(
                             <li key={index} className='list-none'>
                                 <button 
                                     key={index}
-                                    className='w-full p-4 text-start hover:bg-[#908771] hover:text-white'
+                                    className='w-full p-4 text-start hover:bg-primary-500'
                                     onClick={() => handleOptionClick(item)}
                                 >
                                     {item.label}
