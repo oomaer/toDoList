@@ -12,6 +12,8 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
 
     const isRunned = useRef<boolean>(false);
     
+    //this method will authenticate the token stored in local storage
+    //Gets the user data from the server with the help of token and sets the user and isAuthenticated state
     const authenticateToken = async () => {
         try{
             const response = await GET_USER();
