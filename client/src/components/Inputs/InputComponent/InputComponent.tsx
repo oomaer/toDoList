@@ -1,25 +1,19 @@
-import { useState } from "react"
 
 interface InputComponentProps {
     value: string
-    setValue: (value: string) => void
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     placeholder?: string
 }
 
-const InputComponent = ({value, setValue, placeholder}: InputComponentProps) => {
-    
-    
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
-    }
+const InputComponent = ({value, onChange, placeholder}: InputComponentProps) => {
     
     return(
         <input
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-        >
-        
+            className="w-full border border-gray-300 rounded-[5px] p-2"
+        >    
         </input>
     )
 }

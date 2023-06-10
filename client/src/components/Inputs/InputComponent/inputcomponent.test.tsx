@@ -6,38 +6,35 @@ import { vi } from "vitest";
 describe("Input Component", () => {
 
     test("input component renders correctly", () => {
-        render(<InputComponent value="" setValue={()=>{}} />);
+        render(<InputComponent value="" onChange={()=>{}} />);
         const inputElement = screen.getByRole("textbox");
         expect(inputElement).toBeInTheDocument();
     });
 
     
     test("input component has correct value ", () => {
-        render(<InputComponent value="hello" setValue={()=>{}} />);
+        render(<InputComponent value="hello" onChange={()=>{}} />);
         const inputElement = screen.getByRole("textbox");
         expect(inputElement).toHaveValue("hello");
     });
 
 
     test("input component has correct placeholder ", () => {
-        render(<InputComponent value="" setValue={()=>{}} placeholder="placeholder" />);
+        render(<InputComponent value="" onChange={()=>{}} placeholder="placeholder" />);
         const inputElement = screen.getByRole("textbox");
         expect(inputElement).toHaveAttribute("placeholder", "placeholder");
     });
 
 
     test("input component calls onChange Correctly", async () => {
-        
-        const setValue = (value: string) => {
-            return value;
-        };
+ 
 
-        const mockFunction = vi.fn(setValue);
+        const mockFunction = vi.fn();
 
-        render(<InputComponent value="" setValue={mockFunction} />);
+        render(<InputComponent value="" onChange={mockFunction} />);
         const inputElement = screen.getByRole("textbox");
-        await user.type(inputElement, "w");
-        expect(mockFunction).toBeCalledWith("w");
+        await user.type(inputElement, "hello");
+        expect(mockFunction).toBeCalledTimes(5);
 
     });
 
