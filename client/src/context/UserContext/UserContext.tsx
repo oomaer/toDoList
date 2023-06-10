@@ -1,11 +1,9 @@
 
 import { createContext } from "react";
+import { User } from "../../types/user.type";
 
 interface UserContextInterface{
-    user: {
-        name: string;
-        email: string;
-    },
+    user: User | null,
     isAuthenticated: boolean | null;
     setUser: (user:any) => void;
     setIsAuthenticated: (isAuthenticated:boolean) => void;
@@ -14,6 +12,7 @@ interface UserContextInterface{
 
 const UserContext = createContext<UserContextInterface>({
     user: {
+        _id: '',
         name: '',
         email:  '',
     },

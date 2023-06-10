@@ -13,6 +13,10 @@ export const REGISTER_USER = (name:string, email:string, password:string) => {
     return poster('/user/register', {name, email, password})
 }
 
-export const CREATE_TODO = (description:string) => {
-    return poster('/todo/create', {description})
+export const CREATE_TODO = (description:string, userId: string) => {
+    return poster('/todo/create', {description, userId})
+}
+
+export const GET_TODOS = (userId: string) => {
+    return fetcher(`/todo/${userId}`)
 }

@@ -7,6 +7,7 @@ import TodoItems from "./TodoItems"
 import { TodoType } from "../../types/todo.type"
 import { useAuth } from "../../context/UserContext/UserContextProvider"
 import { CREATE_TODO } from "../../api/api"
+import { toast } from "react-toastify"
 
 
 const TodoView = () => {
@@ -19,8 +20,8 @@ const TodoView = () => {
 
     const {user, isAuthenticated} = useAuth()
 
-    const handleAddItem = async () => {
 
+    const handleAddItem = async () => {
         
         if(todo === "") return
 
@@ -32,28 +33,28 @@ const TodoView = () => {
             updatedAt: new Date().toString(),
         }
 
-        if(!isAuthenticated){
+        if(isAuthenticated && user){
+            try{
+                let response = await CREATE_TODO(todo, user._id);
+                if(response.data.success){
+                    let tempItems = [...todoItems]
+                    tempItems.unshift(response.data.todo)
+                    setTodoItems(tempItems)
+                    setTodo("")
+                }
+            }
+            catch(error:any){
+                console.log(error);
+                toast.error(error.message)
+            }
+        }
+        else{
             let tempItems = [...todoItems]
             tempItems.unshift(newTodoItem)
             setTodoItems(tempItems)
             setTodo("")
             return
-        }
-        
-        try{
-            let response = await CREATE_TODO(todo);
-            if(response.data.success){
-                let tempItems = [...todoItems]
-                tempItems.unshift(response.data.todo)
-                setTodoItems(tempItems)
-                setTodo("")
-            }
-        }
-        catch(error){
-            console.log(error);
-        }
-        
-
+        } 
     }
 
     return(

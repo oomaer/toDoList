@@ -2,11 +2,12 @@
 import {ReactNode, useContext, useEffect, useRef, useState } from "react";
 import UserContext from "./UserContext";
 import { GET_USER } from "../../api/api";
+import { User } from "../../types/user.type";
 
 
 const UserContextProvider = ({children}:{children:ReactNode}) => {
 
-    const [user, setUser] = useState<any | null>(undefined);
+    const [user, setUser] = useState<User | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
     const isRunned = useRef<boolean>(false);
