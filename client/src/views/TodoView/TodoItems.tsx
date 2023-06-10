@@ -1,4 +1,4 @@
-import { UPDATE_TODO } from "../../api/api";
+import { DELETE_TODO, UPDATE_TODO } from "../../api/api";
 import TodoItem from "../../components/TodoItem/TodoItem";
 import { useAuth } from "../../context/UserContext/UserContextProvider";
 import { TodoType } from "../../types/todo.type";
@@ -37,7 +37,7 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
         if(isAuthenticated){
             // delete todo
             try{
-                const response = await UPDATE_TODO(todo._id, !todo.completed)
+                const response = await DELETE_TODO(todo._id)
                 if(response.data.success){
                     let filteredItems = items.filter((item) => item._id !== todo._id)
                     setItems(filteredItems)

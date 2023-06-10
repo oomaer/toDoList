@@ -49,7 +49,10 @@ const TodoItem = ({item, handleCheck, handleDelete}: TodoItemProps) => {
                             animate={{opacity: 1, scale: 1}}
                             exit={{opacity: 0, scale: 0}}
                             className="absolute p-2 rounded-[8px] text-sm w-[100px] right-0 bg-white shadow-2xl origin-top-right"
-                            onClick={() => handleDelete(item)}
+                            onClick={() => {
+                                handleDelete(item)
+                                setShowMenu(false)
+                            }}
                             aria-label="delete"
                         >
                             Delete
