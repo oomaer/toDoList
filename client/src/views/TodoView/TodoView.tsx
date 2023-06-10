@@ -3,6 +3,7 @@ import { useState } from "react"
 import InputComponent from "../../components/Inputs/InputComponent/InputComponent"
 import AppLayout from "../../layouts/AppLayout"
 import SelectComponent from "../../components/SelectComponent/SelectComponent"
+import TodoItems from "./TodoItems"
 
 
 const TodoView = () => {
@@ -38,6 +39,9 @@ const TodoView = () => {
                         />
                     </div>
 
+                    <div className="w-full">
+                        <TodoItems items={todoItems} />
+                    </div>
                     
 
                 </div>
@@ -56,4 +60,8 @@ const filterItems = [
     {value: "today", label: "to do today"},
     {value: "week", label: "to do this week"},
     {value: "month", label: "to do this month"},
+]
+
+const todoItems = [
+    {_id: "2", description: "todo 1", createdAt: "2021-10-10", updatedAt: "2021-10-10", completed: false},
 ]
