@@ -4,6 +4,9 @@ import InputComponent from "../../components/Inputs/InputComponent/InputComponen
 import AppLayout from "../../layouts/AppLayout"
 import SelectComponent from "../../components/SelectComponent/SelectComponent"
 import TodoItems from "./TodoItems"
+import { TodoType } from "../../types/todo.type"
+import { useAuth } from "../../context/UserContext/UserContextProvider"
+import { CREATE_TODO } from "../../api/api"
 
 
 const TodoView = () => {
@@ -12,6 +15,46 @@ const TodoView = () => {
 
     const [filter, setFilter] = useState<{value:string, label:string}>(filterItems[0])
 
+    const [todoItems, setTodoItems] = useState<TodoType[]>([]);
+
+    const {user, isAuthenticated} = useAuth()
+
+    const handleAddItem = async () => {
+
+        
+        if(todo === "") return
+
+        const newTodoItem: TodoType = {
+            _id: Math.random().toString(),
+            description: todo,
+            completed: false,
+            createdAt: new Date().toString(),
+            updatedAt: new Date().toString(),
+        }
+
+        if(!isAuthenticated){
+            let tempItems = [...todoItems]
+            tempItems.unshift(newTodoItem)
+            setTodoItems(tempItems)
+            setTodo("")
+            return
+        }
+        
+        try{
+            let response = await CREATE_TODO(todo);
+            if(response.data.success){
+                let tempItems = [...todoItems]
+                tempItems.unshift(response.data.todo)
+                setTodoItems(tempItems)
+                setTodo("")
+            }
+        }
+        catch(error){
+            console.log(error);
+        }
+        
+
+    }
 
     return(
         <AppLayout>
@@ -26,7 +69,9 @@ const TodoView = () => {
                                 placeholder="Add a todo"
                             />
                         </div>
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">
+                        <button
+                            onClick={handleAddItem}
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2">
                             Add
                         </button>
                     </div>
@@ -60,8 +105,4 @@ const filterItems = [
     {value: "today", label: "to do today"},
     {value: "week", label: "to do this week"},
     {value: "month", label: "to do this month"},
-]
-
-const todoItems = [
-    {_id: "2", description: "todo 1", createdAt: "2021-10-10", updatedAt: "2021-10-10", completed: false},
 ]

@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/UserContext/UserContextProvider";
 
 
 const Navbar = () => {
 
-    const {user, setUser, setIsAuthenticated} = useAuth();
+    const {isAuthenticated, setUser, setIsAuthenticated} = useAuth();
 
     const handleLogout = () => {
         localStorage.removeItem('todoapp_token');
@@ -16,9 +17,16 @@ const Navbar = () => {
             <div className="flex items-center justify-between">
                 <h1>To Do List App</h1>
                 <div className="flex">
-                    <button onClick={handleLogout}>
-                        logout
-                    </button>
+                    {isAuthenticated ? (
+                        <button onClick={handleLogout}>
+                            logout
+                        </button>
+                    ): (
+                        <Link to="/login">
+                            Login
+                        </Link>
+                    )}
+                    
                 </div>
             </div>
         </nav>

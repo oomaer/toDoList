@@ -10,8 +10,6 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
     const isRunned = useRef<boolean>(false);
-
-    console.log(user)
     
     const authenticateToken = async () => {
         try{
