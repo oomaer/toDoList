@@ -8,6 +8,7 @@ import { TodoType } from "../../types/todo.type"
 import { useAuth } from "../../context/UserContext/UserContextProvider"
 import { CREATE_TODO, GET_FILTERED_TODOS } from "../../api/api"
 import { toast } from "react-toastify"
+import UserProfileCard from "../../components/UserProfileCard/UserProfileCard"
 
 
 const TodoView = () => {
@@ -84,6 +85,10 @@ const TodoView = () => {
             <div className="w-full flex justify-center items-center">
                 <div className="w-full max-w-[500px] flex flex-col justify-center items-center">
                     
+                    <div className="mb-8">
+                        <UserProfileCard user={user} />
+                    </div>
+
                     <div className="flex w-full mb-2">
                         <div className="flex flex-grow">
                             <InputComponent
