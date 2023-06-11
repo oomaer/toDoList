@@ -7,7 +7,7 @@
 <p>To Run the application perform the following steps: </p>
 <ul>
     <li>Clone the app by running git clone command</li>
-    <li>Inside the project folder and run 'docker compose build'</li>
+    <li>Inside the project root folder run 'docker compose build'</li>
     <li>Run the command 'docker compose up -d'</li>
     <li>The App will start running on port 3033, you can change this port in docker-compose.yml file in root folder of the project</li>
 </ul>
