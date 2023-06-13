@@ -7,6 +7,7 @@ import { useAuth } from "../../../context/UserContext/UserContextProvider"
 import { REGISTER_USER } from "../../../api/api"
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
 import { Link, useNavigate } from "react-router-dom"
+import LoadingComponent from "../../../components/LoadingComponent/LoadingComponent"
 
 
 
@@ -18,6 +19,8 @@ const Register = () => {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -54,15 +57,19 @@ const Register = () => {
     const handleRegister = async () => {
         if(!isInputValid()) return
         try{
+            setLoading(true)
             const res = await REGISTER_USER(name, email, password);
             if(res.data){
+                setLoading(false)
                 setUser(res.data.user)
                 setIsAuthenticated(true)
                 localStorage.setItem("todoapp_token", res.data.jwt)
                 navigate("/")
             }
+            setLoading(false)
         }
         catch(err:any){
+            setLoading(false)
             console.log(err.message)
             setErrorMessage(err.message)
         }
@@ -124,14 +131,18 @@ const Register = () => {
 
                     </div>
 
-                    <div className="flex justify-center mb-4">
-                        <PrimaryButton onClick={handleRegister}>
-                            Sign Up
-                        </PrimaryButton>
+                    <div className="flex justify-center mb-4 h-[40px]">
+                        {loading ? (
+                            <LoadingComponent size="40" />
+                        ): (
+                            <PrimaryButton onClick={handleRegister}>
+                                Sign Up
+                            </PrimaryButton>
+                        )}
                     </div>
 
                     <div className="flex justify-end">
-                        <p className="text-sm text-gray-500">Already Have an Account? <Link to="/login" className="text-blue-500 font-[500] cursor-pointer">Login</Link></p>
+                        <p className="text-sm text-gray-500">Already Have an Account? <Link to="/login" className="text-primary-400 font-[500] cursor-pointer">Login</Link></p>
                     </div>
 
                 </div>

@@ -5,7 +5,7 @@ import { useAuth } from "../../../context/UserContext/UserContextProvider"
 import { LOGIN_USER } from "../../../api/api"
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
 import { Link, useNavigate } from "react-router-dom"
-import { InfinitySpin } from "react-loader-spinner"
+import LoadingComponent from "../../../components/LoadingComponent/LoadingComponent"
 
 
 
@@ -17,7 +17,7 @@ const Login = () => {
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -51,6 +51,7 @@ const Login = () => {
                 localStorage.setItem("todoapp_token", res.data.jwt)
                 navigate('/')
             }
+            setLoading(false)
         }
         catch(err:any){
             setLoading(false)
@@ -102,12 +103,9 @@ const Login = () => {
 
                     </div>
 
-                    <div className="flex justify-center mb-4">
+                    <div className="flex justify-center mb-4 h-[40px]">
                         {loading ? (
-                            <InfinitySpin 
-                                width='200'
-                                color="#4fa94d"
-                            />
+                            <LoadingComponent size="40" />
                         ): (
                             <PrimaryButton onClick={handleLogin}>
                                 Login
@@ -116,7 +114,7 @@ const Login = () => {
                     </div>
 
                     <div className="flex justify-end">
-                        <p className="text-sm text-gray-500">Don't have an account? <Link to="/register" className="text-blue-500 font-[500] cursor-pointer">Sign up</Link></p>
+                        <p className="text-sm text-gray-500">Don't have an account? <Link to="/register" className="text-primary-400 font-[500] cursor-pointer">Sign up</Link></p>
                     </div>
 
 
