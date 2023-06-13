@@ -2,11 +2,11 @@
 
 const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
-const { hashSync, compareSync } = require("bcrypt");
+const { compareSync } = require("bcrypt");
+const { createNewUser, findUserByEmail, generateUserToken } = require('../services/UserService');
 const {checkValidEmail, checkValidPassword, checkValidName} = require('../utils/validityCheckers');
-require('dotenv').config();
 
-const saltRounds = 10;
+
 
 /*
     @desc Register a user
@@ -28,15 +28,8 @@ const registerUser = async (req, res) => {
         if(!checkValidName(name)){
             res.status(400).json({success: false, message: 'Invalid name'});
             return;
-        } 
-
-        const user = new User({ name, email, password: hashSync(req.body.password, saltRounds)});
-        const newUser = await user.save();
-
-        const token = jwt.sign({
-            email: newUser.email,
-        }, process.env.JWT_KEY);
-
+        }     
+        const {newUser, token} = await createNewUser(name, email, password);
         res.status(201).json({success: true, message: 'User created successfully', jwt: token, user: {name: newUser.name, email: newUser.email, _id: newUser._id}});
         
     } catch (error) {
@@ -56,9 +49,7 @@ const registerUser = async (req, res) => {
 */
 const loginUser = async (req, res) => {
     try{
-        const user = await User.findOne({
-            email: req.body.email
-        })
+        const user = await findUserByEmail(req.body.email);
         if(!user){
             res.status(400).json({success: false, message: 'Account does not exist'});
             return;
@@ -67,10 +58,7 @@ const loginUser = async (req, res) => {
             res.status(400).json({success: false, message: 'The Password you entered is incorrect'});
             return;
         }
-        const token = jwt.sign({
-            email: user.email,
-        }, process.env.JWT_KEY);
-
+        const token = generateUserToken(user);
         res.status(200).json({success: true, message: 'User logged in successfully', jwt: token, user: {name: user.name, email: user.email, _id: user._id}});
     }
 
@@ -89,9 +77,7 @@ const authenticateUser = async (req, res) => {
     try{
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_KEY);
-        const user = await User.findOne({
-            email: decoded.email
-        })
+        const user = await findUserByEmail(decoded.email);
         if(!user){
             res.status(400).json({success: false, message: 'User does not exist'});
             return;
