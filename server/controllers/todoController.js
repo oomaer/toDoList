@@ -2,6 +2,14 @@
 
 const Todo = require('../models/TodoModel');
 const {checkValidTodo} = require('../utils/validityCheckers');
+const {
+    createNewTodo,
+    findTodosByUserId,
+    findTodosByDate,
+    findTodosByFilter,
+    changeCompletedStatus,
+    deleteById
+} = require('../services/TodoService');
 
 /*
     @desc Create a todo
@@ -21,16 +29,11 @@ const createTodo = async (req, res) => {
             res.status(400).json({success: false, message: 'Error in creating todo'});
             return;
         }
-        
-        const todo = new Todo({
-            description,
-            completed: false,
-            user: userId
-        })
-        const createdTodo = await todo.save();
+        const createdTodo = await createNewTodo(description, userId);
         res.status(200).json({success: true, message: 'Todo created successfully', todo: createdTodo});
     }
     catch(error){
+        console.log(error.message)
         res.status(500).json({success: false, message: 'Internal server error'});
     }
 }
@@ -44,7 +47,7 @@ const createTodo = async (req, res) => {
 const getTodos = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const todos = await Todo.find({user: userId}).sort({createdAt: -1});
+        const todos = await findTodosByUserId(userId);
         res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
     }
     catch(error){
@@ -66,10 +69,7 @@ const getTodosByDate = async (req, res) => {
     try{
         const userId = req.params.userId;
         const date = req.params.date;
-        const todos = await Todo.find({user: userId, createdAt: {
-            $gte: new Date(date),
-            $lt: new Date(date).setDate(new Date(date).getDate() + 1)
-        }}).sort({createdAt: -1});
+        const todos = await findTodosByDate(userId, date);
         res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
     }
     catch(error){
@@ -91,19 +91,7 @@ const getTodosByFilter = async (req, res) => {
     try{
         const userId = req.params.userId;
         const filter = req.params.filter;
-
-        let startDate = new Date();
-        startDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0, 0, 0);
-        if(filter === 'week'){
-            startDate.setDate(startDate.getDate() - 7);
-        }
-        else if(filter === 'month'){
-            startDate.setDate(startDate.getDate() - 30);
-        }
-
-        const todos = await Todo.find({user: userId, createdAt: {
-            $gte: new Date(startDate),
-        }}).sort({createdAt: -1});
+        const todos = await findTodosByFilter(userId, filter);
         res.status(200).json({success: true, message: 'Todos fetched successfully', todos: todos});
     }
     catch(error){
@@ -128,7 +116,7 @@ const changeTodoComplete = async (req, res) => {
             res.status(400).json({success: false, message: 'Invalid request'});
             return;
         }
-        const updated = await Todo.findByIdAndUpdate(todoId, {completed: req.body.completed}, {new: true});
+        const updated = await changeCompletedStatus(todoId, req.body.completed);
         if(!updated){
             res.status(404).json({success: false, message: 'Todo does not exist'});
             return;
@@ -153,7 +141,7 @@ const changeTodoComplete = async (req, res) => {
 const deleteTodoById = async (req, res) => {
     try{
         const todoId = req.params.todoId;
-        const deleted = await Todo.findByIdAndDelete(todoId);
+        const deleted = await deleteById(todoId);
         if(!deleted){
             res.status(404).json({success: false, message: 'Todo does not exist'});
             return;

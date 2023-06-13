@@ -1,12 +1,9 @@
 
 
-const User = require('../models/UserModel');
-const jwt = require('jsonwebtoken');
 const { compareSync } = require("bcrypt");
 const { createNewUser, findUserByEmail, generateUserToken } = require('../services/UserService');
 const {checkValidEmail, checkValidPassword, checkValidName} = require('../utils/validityCheckers');
-
-
+const jwt = require('jsonwebtoken');
 
 /*
     @desc Register a user
