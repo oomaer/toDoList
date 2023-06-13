@@ -12,15 +12,15 @@ app.use(express.urlencoded({ extended: true }));
 //routes
 const userRoute = require('./routes/userRoute');
 const todoRoute = require('./routes/todoRoute');
+const { connectToDb } = require('./services/DBService');
 
 const main = async () => {
+    
     const db = `${process.env.MONGO_URI}`;
+    const environment = process.env.Node_ENV;
+
     try{    
-        await mongoose.connect(db, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-            dbName: 'todo'
-        });
+        const connection = await connectToDb(db, environment);
         app.use('/user', userRoute)
         app.use('/todo', todoRoute)
 
@@ -30,7 +30,7 @@ const main = async () => {
     
         const PORT = process.env.PORT || 5000;
     
-        if(process.env.Node_ENV!=='test'){
+        if(environment!=='test'){
             app.listen(PORT, () => {
                 console.log('App listening on port '+PORT+'!')
             })
