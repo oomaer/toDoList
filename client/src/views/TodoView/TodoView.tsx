@@ -9,6 +9,7 @@ import { useAuth } from "../../context/UserContext/UserContextProvider"
 import { CREATE_TODO, GET_FILTERED_TODOS } from "../../api/api"
 import { toast } from "react-toastify"
 import UserProfileCard from "../../components/UserProfileCard/UserProfileCard"
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent"
 
 
 const TodoView = () => {
@@ -21,11 +22,17 @@ const TodoView = () => {
 
     const {user, isAuthenticated} = useAuth()
 
+    const [addLoading, setAddLoading] = useState<boolean>(false)
+    const [getLoading, setGetLoading] = useState<boolean>(false)
+
 
     //method called when add button is clicked
     const handleAddItem = async () => {
-        
-        if(todo === "") return
+        if(addLoading) return
+        if(todo === "") {
+            toast.error("Please enter a todo")
+            return
+        } 
 
         const newTodoItem: TodoType = {
             _id: Math.random().toString(),
@@ -35,6 +42,7 @@ const TodoView = () => {
             updatedAt: new Date().toString(),
         }
 
+        setAddLoading(true)
         if(isAuthenticated && user){
             try{
                 let response = await CREATE_TODO(todo, user._id);
@@ -44,8 +52,10 @@ const TodoView = () => {
                     setTodoItems(tempItems)
                     setTodo("")
                 }
+                setAddLoading(false)
             }
             catch(error:any){
+                setAddLoading(false)
                 console.log(error);
                 toast.error(error.message)
             }
@@ -55,6 +65,7 @@ const TodoView = () => {
             tempItems.unshift(newTodoItem)
             setTodoItems(tempItems)
             setTodo("")
+            setAddLoading(false)
             return
         } 
     }
@@ -68,13 +79,17 @@ const TodoView = () => {
     useEffect(() => {
         
         const getTodos = async () => {
+            setGetLoading(true)
             try{
                 const response = await GET_FILTERED_TODOS(user?._id || "", filter.value)
                 if(response.data.success){
                     setTodoItems(response.data.todos)
+                    setGetLoading(false)
                     return
                 }
+                setGetLoading(false)
             }catch(error:any){
+                setGetLoading(false)
                 console.log(error);
                 toast.error(error.message)
             }
@@ -106,8 +121,9 @@ const TodoView = () => {
                         </div>
                         <button
                             onClick={handleAddItem}
-                            className="bg-primary-400 hover:bg-primary-500 shadow-3 text-white px-4 py-2 rounded-[6px] ml-2">
-                            Add
+                            disabled={addLoading}
+                            className="bg-primary-400 hover:bg-primary-500 shadow-3 text-white px-4 py-2 rounded-[6px] ml-2 w-[62px] flex justify-center items-center">
+                            {addLoading ? <LoadingComponent size="12" color="#ffffff" /> : "Add"}
                         </button>
                     </div>
 
@@ -119,10 +135,15 @@ const TodoView = () => {
                         />
                     </div>
 
-                    <div className="w-full">
-                        <TodoItems items={todoItems} setItems={setTodoItems} />
-                    </div>
-                    
+                    {getLoading ? (
+                        <div className="w-full h-[50vh] max-h-[100px] flex justify-center items-center shadow-3 rounded-[10px] bg-white bg-opacity-50"> 
+                            <LoadingComponent size = "50" />
+                        </div>
+                    ): (
+                        <div className="w-full">
+                            <TodoItems items={todoItems} setItems={setTodoItems} />
+                        </div>
+                    )}
 
                 </div>
 
