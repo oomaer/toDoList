@@ -45,6 +45,7 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
                     let filteredItems = items.filter((item) => item._id !== todo._id)
                     setItems(filteredItems)
                 }
+                toast.success("Todo Deleted Successfully")
             }
             catch(error:any){
                 console.log(error);
@@ -54,6 +55,7 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
         else{
             let filteredItems = items.filter((item) => item._id !== todo._id)
             setItems(filteredItems)
+            toast.success("Todo Deleted Successfully")
         }
     }
 

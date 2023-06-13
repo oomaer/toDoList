@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+	--toastify-color-success: #00BAFC;
+}
+
 body{
     font-family: 'Josefin Sans', sans-serif;
 }

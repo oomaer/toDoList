@@ -51,6 +51,7 @@ const TodoView = () => {
                     tempItems.unshift(response.data.todo)
                     setTodoItems(tempItems)
                     setTodo("")
+                    toast.success("Todo Added Successfully")
                 }
                 setAddLoading(false)
             }
@@ -66,6 +67,7 @@ const TodoView = () => {
             setTodoItems(tempItems)
             setTodo("")
             setAddLoading(false)
+            toast.success("Todo Added Successfully")
             return
         } 
     }
