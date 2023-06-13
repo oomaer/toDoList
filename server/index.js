@@ -21,6 +21,10 @@ const main = async () => {
 
     try{    
         const connection = await connectToDb(db, environment);
+        if(!connection){
+            console.log('Error connecting to db');
+            return;
+        }
         app.use('/user', userRoute)
         app.use('/todo', todoRoute)
 

@@ -3,7 +3,7 @@ import { TodoType } from "../../types/todo.type"
 import { CiMenuKebab } from "react-icons/ci"
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import useOutsideAlerter from "../hooks/useOutsideAlerter";
+import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 import moment from "moment";
 
 

@@ -2,7 +2,7 @@
 import { HiOutlineMenu } from 'react-icons/hi'
 import { BiChevronDown } from 'react-icons/bi'
 import { useRef, useState } from 'react'
-import useOutsideAlerter from '../hooks/useOutsideAlerter'
+import useOutsideAlerter from '../../hooks/useOutsideAlerter'
 import {motion, AnimatePresence} from 'framer-motion'
 
 interface SelectComponentProps {

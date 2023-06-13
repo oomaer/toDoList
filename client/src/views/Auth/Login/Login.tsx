@@ -5,6 +5,7 @@ import { useAuth } from "../../../context/UserContext/UserContextProvider"
 import { LOGIN_USER } from "../../../api/api"
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton"
 import { Link, useNavigate } from "react-router-dom"
+import { InfinitySpin } from "react-loader-spinner"
 
 
 
@@ -15,6 +16,8 @@ const Login = () => {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
+
+    const [loading, setLoading] = useState<boolean>(true);
 
     const navigate = useNavigate();
 
@@ -39,8 +42,10 @@ const Login = () => {
     const handleLogin = async () => {
         if(!isInputValid()) return
         try{
+            setLoading(true)
             const res = await LOGIN_USER(email, password);
             if(res.data){
+                setLoading(false)
                 setUser(res.data.user)
                 setIsAuthenticated(true)
                 localStorage.setItem("todoapp_token", res.data.jwt)
@@ -48,6 +53,7 @@ const Login = () => {
             }
         }
         catch(err:any){
+            setLoading(false)
             console.log(err.message)
             setErrorMessage(err.message)
         }
@@ -97,9 +103,16 @@ const Login = () => {
                     </div>
 
                     <div className="flex justify-center mb-4">
-                        <PrimaryButton onClick={handleLogin}>
-                            Login
-                        </PrimaryButton>
+                        {loading ? (
+                            <InfinitySpin 
+                                width='200'
+                                color="#4fa94d"
+                            />
+                        ): (
+                            <PrimaryButton onClick={handleLogin}>
+                                Login
+                            </PrimaryButton>
+                        )}
                     </div>
 
                     <div className="flex justify-end">
