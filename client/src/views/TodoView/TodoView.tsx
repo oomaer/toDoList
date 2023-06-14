@@ -10,6 +10,7 @@ import { CREATE_TODO, GET_FILTERED_TODOS } from "../../api/api"
 import { toast } from "react-toastify"
 import UserProfileCard from "../../components/UserProfileCard/UserProfileCard"
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent"
+import TodoViewShimmer from "./TodoViewShimmer"
 
 
 const TodoView = () => {
@@ -20,7 +21,7 @@ const TodoView = () => {
 
     const [todoItems, setTodoItems] = useState<TodoType[]>([]);
 
-    const {user, isAuthenticated} = useAuth()
+    const {user, isAuthenticated, userLoading} = useAuth()
 
     const [addLoading, setAddLoading] = useState<boolean>(false)
     const [getLoading, setGetLoading] = useState<boolean>(false)
@@ -103,6 +104,7 @@ const TodoView = () => {
 
     }, [isAuthenticated, user, filter])
 
+    if(userLoading) return <TodoViewShimmer />
     return(
         <AppLayout>
             <div className="w-full flex justify-center items-center">

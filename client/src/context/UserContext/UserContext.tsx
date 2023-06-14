@@ -8,6 +8,7 @@ interface UserContextInterface{
     setUser: (user:any) => void;
     setIsAuthenticated: (isAuthenticated:boolean) => void;
     authenticateToken: () => void;
+    userLoading?: boolean;
 }
 
 const UserContext = createContext<UserContextInterface>({
@@ -20,6 +21,7 @@ const UserContext = createContext<UserContextInterface>({
     setUser: () => {},
     setIsAuthenticated: () => {},
     authenticateToken: () => {},
+    userLoading: false,
 });
 
 export default UserContext;
