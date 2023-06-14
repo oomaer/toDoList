@@ -15,11 +15,11 @@ export default function ProtectedRoute({authenticationPath, children}: Protected
 
     const {isAuthenticated, userLoading} = useAuth()
     
-    if(userLoading) return <LoadingView />;
+    if(userLoading)   return <LoadingView />;
 
     if(isAuthenticated) {
         return children;
     } else {
         return <Navigate to={{ pathname: authenticationPath }} />;
     }
-};
+}

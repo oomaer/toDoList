@@ -1,6 +1,5 @@
 import { DELETE_TODO, UPDATE_TODO } from "../../api/api";
 import TodoItem from "../../components/TodoItem/TodoItem";
-import { useAuth } from "../../context/UserContext/UserContextProvider";
 import { TodoType } from "../../types/todo.type";
 import { toast } from 'react-toastify'
 import {motion} from 'framer-motion'
@@ -13,8 +12,8 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
         try{
             const response = await UPDATE_TODO(todo._id, !todo.completed)
             if(response.data.success){
-                let tempItems = [...items]
-                let index = tempItems.findIndex((item) => item._id === todo._id)
+                const tempItems = [...items]
+                const index = tempItems.findIndex((item) => item._id === todo._id)
                 tempItems[index].completed = !tempItems[index].completed
                 tempItems[index].updatedAt = new Date().toString()
                 setItems(tempItems)
@@ -31,7 +30,7 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
         try{
             const response = await DELETE_TODO(todo._id)
             if(response.data.success){
-                let filteredItems = items.filter((item) => item._id !== todo._id)
+                const filteredItems = items.filter((item) => item._id !== todo._id)
                 setItems(filteredItems)
             }
             toast.success("Todo Deleted Successfully")
