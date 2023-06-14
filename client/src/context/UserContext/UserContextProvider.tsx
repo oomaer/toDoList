@@ -9,7 +9,7 @@ const UserContextProvider = ({children}:{children:ReactNode}) => {
 
     const [user, setUser] = useState<User | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-    const [userLoading, setUserLoading] = useState<boolean>(false);
+    const [userLoading, setUserLoading] = useState<boolean>(true);
 
     const isRunned = useRef<boolean>(false);
     

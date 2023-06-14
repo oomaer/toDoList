@@ -7,55 +7,38 @@ import {motion} from 'framer-motion'
 
 const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[])=>void}) => {
 
-    const {isAuthenticated} = useAuth();
 
     const handleCheck = async (todo: TodoType) => {
-        if(isAuthenticated){
             // update todo
-            try{
-                const response = await UPDATE_TODO(todo._id, !todo.completed)
-                if(response.data.success){
-                    let tempItems = [...items]
-                    let index = tempItems.findIndex((item) => item._id === todo._id)
-                    tempItems[index].completed = !tempItems[index].completed
-                    tempItems[index].updatedAt = new Date().toString()
-                    setItems(tempItems)
-                }
-            }
-            catch(error:any){
-                console.log(error);
-                toast.error(error.message)
+        try{
+            const response = await UPDATE_TODO(todo._id, !todo.completed)
+            if(response.data.success){
+                let tempItems = [...items]
+                let index = tempItems.findIndex((item) => item._id === todo._id)
+                tempItems[index].completed = !tempItems[index].completed
+                tempItems[index].updatedAt = new Date().toString()
+                setItems(tempItems)
             }
         }
-        else{
-            let tempItems = [...items]
-            let index = tempItems.findIndex((item) => item._id === todo._id)
-            tempItems[index].completed = !tempItems[index].completed
-            tempItems[index].updatedAt = new Date().toString()
-            setItems(tempItems)
+        catch(error:any){
+            console.log(error);
+            toast.error(error.message)
         }
     }
 
     const handleDelete = async (todo: TodoType) => {
-        if(isAuthenticated){
-            // delete todo
-            try{
-                const response = await DELETE_TODO(todo._id)
-                if(response.data.success){
-                    let filteredItems = items.filter((item) => item._id !== todo._id)
-                    setItems(filteredItems)
-                }
-                toast.success("Todo Deleted Successfully")
+        // delete todo
+        try{
+            const response = await DELETE_TODO(todo._id)
+            if(response.data.success){
+                let filteredItems = items.filter((item) => item._id !== todo._id)
+                setItems(filteredItems)
             }
-            catch(error:any){
-                console.log(error);
-                toast.error(error.message)
-            }
-        }
-        else{
-            let filteredItems = items.filter((item) => item._id !== todo._id)
-            setItems(filteredItems)
             toast.success("Todo Deleted Successfully")
+        }
+        catch(error:any){
+            console.log(error);
+            toast.error(error.message)
         }
     }
 
@@ -75,7 +58,7 @@ const TodoItems = ({items, setItems}: {items:TodoType[], setItems: (i:TodoType[]
             <motion.div 
                 initial={{maxHeight:0}}
                 animate={{maxHeight:450}}
-            className="w-full h-[50vh] max-h-[450px] overflow-y-auto custom-scrollbar"> 
+                className="w-full h-[50vh] max-h-[450px] overflow-y-auto custom-scrollbar"> 
                 {items.map((item, index) => {
                     return(
                         <TodoItem key={index} item={item} handleCheck={handleCheck} handleDelete={handleDelete} />

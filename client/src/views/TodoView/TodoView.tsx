@@ -21,7 +21,7 @@ const TodoView = () => {
 
     const [todoItems, setTodoItems] = useState<TodoType[]>([]);
 
-    const {user, isAuthenticated, userLoading} = useAuth()
+    const {user} = useAuth()
 
     const [addLoading, setAddLoading] = useState<boolean>(false)
     const [getLoading, setGetLoading] = useState<boolean>(false)
@@ -35,42 +35,25 @@ const TodoView = () => {
             return
         } 
 
-        const newTodoItem: TodoType = {
-            _id: Math.random().toString(),
-            description: todo,
-            completed: false,
-            createdAt: new Date().toString(),
-            updatedAt: new Date().toString(),
-        }
-
         setAddLoading(true)
-        if(isAuthenticated && user){
-            try{
-                let response = await CREATE_TODO(todo, user._id);
-                if(response.data.success){
-                    let tempItems = [...todoItems]
-                    tempItems.unshift(response.data.todo)
-                    setTodoItems(tempItems)
-                    setTodo("")
-                    toast.success("Todo Added Successfully")
-                }
-                setAddLoading(false)
+   
+        try{
+            let response = await CREATE_TODO(todo, user?._id as string);
+            if(response.data.success){
+                let tempItems = [...todoItems]
+                tempItems.unshift(response.data.todo)
+                setTodoItems(tempItems)
+                setTodo("")
+                toast.success("Todo Added Successfully")
             }
-            catch(error:any){
-                setAddLoading(false)
-                console.log(error);
-                toast.error(error.message)
-            }
-        }
-        else{
-            let tempItems = [...todoItems]
-            tempItems.unshift(newTodoItem)
-            setTodoItems(tempItems)
-            setTodo("")
             setAddLoading(false)
-            toast.success("Todo Added Successfully")
-            return
-        } 
+        }
+        catch(error:any){
+            setAddLoading(false)
+            console.log(error);
+            toast.error(error.message)
+        }
+   
     }
 
 
@@ -98,13 +81,11 @@ const TodoView = () => {
             }
         }
         
-        if(isAuthenticated && user){
-            getTodos()
-        }
+        getTodos()
 
-    }, [isAuthenticated, user, filter])
+    }, [filter])
 
-    if(userLoading) return <TodoViewShimmer />
+
     return(
         <AppLayout>
             <div className="w-full flex justify-center items-center">
