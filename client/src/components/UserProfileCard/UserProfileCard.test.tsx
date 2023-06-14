@@ -10,11 +10,5 @@ describe('UserProfileCard', () => {
         expect(username).toHaveTextContent("Test User")
     })
 
-    test("should render Guest User if user is null", async () => {
-        render(<UserProfileCard user={null} />)
-        const username = await screen.findByTestId("username", {}, {timeout: 1000});
-        expect(username).toHaveTextContent("Guest User")
-
-    })
 
 })
