@@ -1,6 +1,5 @@
 
 
-const Todo = require('../models/TodoModel');
 const {checkValidTodo} = require('../utils/validityCheckers');
 const {
     createNewTodo,
